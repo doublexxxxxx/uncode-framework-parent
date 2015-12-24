@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>提供的插件</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css"></link>
+</head>
+<body>
+<h1>提供的插件</h1>
+<p>随着MyBatis生成器（MBG）的使用量的增加，我们发现越来越有用以通过插件增加功能，而不是添加到基本代码发生器的复杂性。插件是一个模块化的，易于理解的机制，继承MBG。有关编写一个插件的更多信息，请参阅<a href="pluggingIn.html">实现插件</a> 。有关配置插件的信息，请参阅<a href="../configreference/plugin.html">&lt;plugin&gt;</a></p>
+
+<p>所提供的插件都在<code>org.mybatis.generator.plugins</code> 包。所提供的插件展示不同类型的可以完成与MBG插件任务。插件的源代码可以和MBG一起下载，也可以在线浏览<a href="https://github.com/mybatis/generator/tree/master/core/mybatis-generator-core/src/main/java/org/mybatis/generator/plugins" target="_blank">这里</a> 。</p>
+
+<h2>org.mybatis.generator.plugins.CachePlugin</h2>
+<p>这个插件在生成的SQL映射中增加了一个&lt;cache&gt;元素。这个插件仅用于MyBatis3目标运行时环境。</p>
+<p>这个插件接受下列属性。都是可选的，并且，如果指定，则值将被直接传递到相应的属性生成的&lt;cache&gt;元素。</p>
+<ul>
+  <li>cache_eviction</li>
+  <li>cache_flushInterval</li>
+  <li>cache_readOnly</li>
+  <li>cache_size</li>
+  <li>cache_type</li>
+</ul>
+<p>所有属性都可以通过指定&lt;table&gt;元素的属性来覆盖。</p>
+
+<h2>org.mybatis.generator.plugins.CaseInsensitiveLikePlugin</h2>
+<p>该插件给Example类添加方法（实际上是给Criteria内部类）来支持不区分大小写的LIKE搜索。这表明通过插件给Example类添加功能，而不是扩展这个类。</p>
+
+<h2>org.mybatis.generator.plugins.EqualsHashCodePlugin</h2>
+<p>这个插件给由MBG生成的Java模型对象增加了<code>equals</code>和<code>hashCode</code>方法。</p>
+<p>通过这个类生成的<code>equals</code>方法，在大多数情况下是正确的，但如果您已经指定了rootClass可能是不正确的 - 因为我们的equals方法只检查它知道的字段。</p>
+
+<h2>org.mybatis.generator.plugins.MapperConfigPlugin</h2>
+<p>这个插件生成包含对MBG所生成的XML映射文件的框架MapperConfig.xml文件。此文件可用于配置的MyBatis 3.X环境。</p>
+<p>这个插件接受三个属性：</p>
+<ul>
+  <li><tt>fileName</tt> ​​（可选的）生成的文件的名称。如果没有指定，默认为“MapperConfig.xml”。</li>
+  <li><tt>targetPackage</tt>（必须的）生成文件放置的包名。指定像“com.mycompany.sql”这样的值。</li>
+  <li><tt>targetProject</tt>（必须的）该文件应放置在的项目名称。</li>
+</ul>
+<p>注： <code>targetPackage</code>和<code>targetProject</code>遵循sqlMapGenerator配置元素上<code>targetPackage</code>和<code>targetProject</code>的相同的规则。</p>
+
+<h2>org.mybatis.generator.plugins.RenameExampleClassPlugin</h2>
+<p>这个插件通过重命名由MBG生成的Example类的方法演示<code>initialized</code>方法的用法。</p>
+<p>这个插件接受两个属性：</p>
+<ul>
+  <li><tt>searchString</tt>（必须的），用于搜索默认生成的Example的名称的正则表达式。</li>
+  <li><tt>replaceString</tt>（必须的）插在匹配<tt>searchString</tt>位置的字符串。</li>
+</ul>
+<p>例如，从xxxExample重命名生成的例子类xxxCriteria，指定<tt>实例美元searchString</tt>和<tt>标准replaceString</tt></p>
+
+<h2>org.mybatis.generator.plugins.RowBoundsPlugin</h2>
+<p>这个插件将添加一个新版本<code>selectByExample</code>方法接受<code>RowBounds</code>参数。这支持的MyBatis RowBounds函数，其中一个返回的结果列表可以在长度受到限制，并且开始位置可以被指定。这可以是在分页应用中是有用的。</p>
+<p>这个插件仅适用于MyBatis3目标运行时环境。</p>
+
+<h2>org.mybatis.generator.plugins.SerializablePlugin</h2>
+<p>这个插件给由MBG生成的Javas添加了<code>java.io.Serializable</code>标记接口。这个插件给实体类增加了<code>serialVersionUID</code>字段。</p>
+<p>重要提示：这是一个简单的实现java.io.Serializable并且不会尝试做任何版本的类。</p>
+<p>这个插件接受两个属性：</p>
+<ul>
+  <li><tt>addGWTInterface</tt>（可选的）True/False.。如果为true，插件将给实体对象增加谷歌Web工具包（GWT）的 <code>IsSerializable</code>接口。默认值是false。</li>
+  <li><tt>suppressJavaInterface</tt>（必须的）True/False。如果为true，插件将不添加<code>java.io.Serializable</code>接口。这是对于其中对象应该是可序列化的GWT，但不是严格意义上的Java的场景。默认值是false。</li>
+</ul>
+
+<h2>org.mybatis.generator.plugins.SqlMapConfigPlugin</h2>
+<p>这个插件生成包含对MBG所产生的SqlMap.xml文件的SqlMapConfig.xml框架文件。此文件可用于配置的iBATIS 2.x的环境。</p>
+<p>这个插件接受三个属性：</p>
+<ul>
+  <li><tt>fileName</tt> ​​（可选的）所产生的文件的名称。如果没有指定，默认值是“SqlMapConfig.xml”。</li>
+  <li><tt>targetPackage</tt>（必须的）放置该文件的包名。指定像“com.mycompany.sql”这样的值。</li>
+  <li><tt>targetProject（</tt>必须的）放置该文件的项目的名称。</li>
+</ul>
+<p>注： <code>targetPackage</code>和<code>targetProject</code>遵循和sqlMapGenerator配置元素上的<code>targetPackage</code>和<code>targetProject</code>相同的规则。</p>
+
+<h2>org.mybatis.generator.plugins.ToStringPlugin</h2>
+<p>该插件给实体类添加<code>toString()</code>方法。</p>
+
+<h2>org.mybatis.generator.plugins.VirtualPrimaryKeyPlugin</h2>
+<p>这个插件可用于指定作为主键的列，即使它们没有在数据库中被定义为主键列。这是在数据库表没有定义主的情况下非常有用。通常情况下，如果没有主键，MBG将产生一组非常有限的方法。这个插件可以用来启用生成的完整的MBG方法。</p>
+<p>要使用该插件，添加属性“virtualKeyColumns”到您的&lt;table&gt;配置，设置值为应被视做主键的用逗号或空格分隔的列名列表。列名必须和数据库（通常全部大写）返回的列名完全匹配。例如：</p>
+<pre>
+  &lt;table tableName="foo"&gt;
+    &lt;property name="virtualKeyColumns" value="ID1, ID2" /&gt;
+  &lt;/table&gt;
+</pre>
+</body>
+</html>

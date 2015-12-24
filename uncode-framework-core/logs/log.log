@@ -1,0 +1,2 @@
+2015-12-07 11:06:37 [freemarker.cache]-[DEBUG]: Could not find template in cache, creating new one; id=["template_1.ftl"["en_US",UTF-8,parsed] ]
+2015-12-07 11:06:37 [freemarker.cache]-[DEBUG]: Compiling FreeMarker template "template_1.ftl"["en_US",UTF-8,parsed]  from "file:/C:/MMM/PROJECT/UNCODESPACES/uncode-framework-parent/uncode-framework-core/target/classes/mail/templates/template_1.ftl"

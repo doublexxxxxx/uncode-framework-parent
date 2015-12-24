@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;jdbcConnection&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;jdbcConnection&gt; 元素</h1>
+<p>&lt;jdbcConnection&gt; 元素用于指定数据库连接所需的内省表的属性。
+MyBatis Generator 使用JDBC的数据库元数据类来发现您在配置中指定的属性表。
+每一个<a href="context.html">&lt;context&gt;</a>都必须有一个&lt;jdbcConnection&gt;元素。</p>
+
+<h2>必选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">driverClass</td>
+    <td>用于访问数据库的JDBC驱动程序的完全限定类名称。
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">connectionURL</td>
+    <td>用于访问数据库的JDBC连接URL。</td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">userId</td>
+    <td>访问数据库的用户ID。</td>
+  </tr>
+  <tr>
+    <td valign="top">password</td>
+    <td>访问数据库的密码。</td>
+  </tr>
+</table>
+
+<h2>子元素</h2>
+<ul>
+  <li><a href="property.html">&lt;property&gt;</a> (0..N)
+    注意: 这里指定的任何属性将添加到JDBC驱动程序的属性中。</li>
+</ul>
+
+<h2>示例</h2>
+<p>此元素将连接到DB2数据库配置为MBGTEST在DB2客户端配置实用程序。
+使用JDBC驱动程序的默认安装位置:</p>
+<pre>
+&lt;jdbcConnection driverClass="COM.ibm.db2.jdbc.app.DB2Driver"
+    connectionURL="jdbc:db2:MBGTEST"
+    userId="db2admin"
+    password="db2admin"&gt;
+&lt;/jdbcConnection&gt;
+</pre>
+
+</body>
+</html>

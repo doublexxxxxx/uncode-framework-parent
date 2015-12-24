@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+	<!-- 开启缓存 -->
+	<cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true" />
+	<!-- 配置memcached的缓存服务器 -->
+	<bean id="memcachedClientBuilder" class="net.rubyeye.xmemcached.XMemcachedClientBuilder">
+		<constructor-arg>
+			<list>
+				<bean class="java.net.InetSocketAddress">
+					<constructor-arg value="localhost" />
+					<constructor-arg value="11211" />
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+	<bean id="memcachedClient" factory-bean="memcachedClientBuilder" factory-method="build"
+		destroy-method="shutdown" />
+	<bean id="cacheManager" class="org.uncodeframework.core.common.cache.memcached.MemcachedCacheManager">
+		<property name="memcachedClient" ref="memcachedClient" />
+		<!-- 配置缓存时间 -->
+		<property name="configMap">
+			<map>
+				<entry key="typeList" value="3600" />   <!-- key缓存对象名称 value缓存过期时间 -->
+			</map>
+		</property>
+	</bean>
+	<!-- <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"> <property 
+		name="cacheManager" ref="ehcacheManager" /> </bean> <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"> 
+		<property name="configLocation" value="classpath:ehcache/ehcache.xml" /> </bean> -->
+</beans>

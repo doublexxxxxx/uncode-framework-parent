@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;columnOverride&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;columnOverride&gt; 元素</h1>
+<p>MyBatis Generator (MBG) 使用 &lt;columnOverride&gt; 元素从将某些属性默认计算的值更改为内省数据库列得的值。
+这个元素是 <a href="table.html">&lt;table&gt;</a> 元素可选的一个子元素。</p>
+
+<h2>必选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td>column</td>
+    <td>要内省的列名</td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">property</td>
+    <td>要使用的 Java 属性的名称。如果没有指定，MBG会根据列名生成。
+        例如，如果一个表的一列名为"STRT_DTE"，
+        MBG会根据"useActualColumnNames"属性(查看<a href="table.html">&lt;table&gt;</a> 的属性获取更多的信息)
+        生成"STRT_DTE" 或 "strtDte"。</td>
+  </tr>
+  <tr>
+    <td valign="top">javaType</td>
+    <td>该列属性的完全限定的 Java 类型。如果需要，这可以覆盖由 <code>JavaTypeResolver</code> 计算出的类型。
+        对某些数据库来说，
+        这是必要的用来处理“奇怪的”数据库类型（例如 MySql 的 unsigned bigint 类型需要映射为 java.lang.Object)。</td>
+  </tr>
+  <tr>
+    <td valign="top">jdbcType</td>
+    <td>该列的 JDBC 类型 (INTEGER, DECIMAL, NUMERIC, VARCHAR 等等)。
+        如果需要，这可以覆盖由 <code>JavaTypeResolver</code> 计算出的类型。
+        对某些数据库来说，这是必要的用来处理怪异的 JDBC 驱动
+        (例如 DB2 的 LONGVARCHAR 类型需要为iBATIS 映射为 VARCHAR)。</td>
+  </tr>
+  <tr>
+    <td valign="top">typeHandler</td>
+    <td>
+      用户定义的需要用来处理这列的类型处理器。
+      它必须是一个继承iBATIS的 <code>TypeHandler</code> 类或 <code>TypeHandlerCallback</code>接口（该接口很容易继承）
+      的全限定的类名。
+      如果没有指定或者是空白，iBATIS会用默认的类型处理器来处理类型。
+      <b>重要:</b> MBG 不会校验这个类型处理器是否存在或者可用。
+      MGB只是简单的将这个值插入到生成的SQL映射的配置文件中。
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">delimitedColumnName</td>
+    <td>
+      指定是否应在生成的 SQL 分隔的列名称。
+        如果列的名称中包含空格，MGB会自动的分割列名，
+        所以这个重写只有当列名需要强制为一个合适的名字或者列名是数据库中的保留字时是必要的。
+        <p>当设置为 "true" 是, <code>column</code> 属性用于重写必须匹配从数据库返回的列名。</p>
+        <p>分隔符指定在
+        <a href="context.html">&lt;context&gt;</a> 元素上。</p>
+        <p><i>默认值是false。然而MGB会自动分割包含空格的列名，所以在这种情况下不需要重写。</i></p>
+    </td>
+  </tr>
+</table>
+
+<h2>子元素</h2>
+<ul>
+  <li><a href="property.html">&lt;property&gt;</a> (0..N)
+    注：在此处定义的任何属性都会被加入相应的内省列的属性集合中。
+    MBG目前不响应任何属性。
+    此元素被设置使得对于每一列的特殊值，可以在该插件被编码，
+    以产生或修改一些独特的特定列中的事件被提供给插件。</li>
+</ul>
+
+</body>
+</html>

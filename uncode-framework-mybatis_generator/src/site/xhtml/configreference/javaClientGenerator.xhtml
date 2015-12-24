@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;javaClientGenerator&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;javaClientGenerator&gt; 元素</h1>
+<p>&lt;javaClientGenerator&gt; 元素用于定义 Java 客户端代码生成器的属性。
+Java客户端生成器生成Java接口和类，它可以简单地使用生成的Java模型和XML映射文件。
+在iBATIS2目标环境中，这些对象可以生成DAO接口和实现类形式的代码。
+对Mybatis来说，会生成Mapper接口形式的代码。
+这个元素是 <a href="context.html">&lt;context&gt;</a> 元素的一个可选的子元素。
+如果不指定此元素，然后代码生成器(MBG)将不会生成Java客户端接口和类</p>
+<h2>必选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">type</td>
+    <td>此属性用于选择一个预定义的Java客户端的生成器，或指定用户提供的Java客户端生成器。
+        任何用户提供的DAO生成器必须继承
+        <code>org.mybatis.generator.codegen.AbstractJavaClientGenerator</code>
+        类, 必须有一个公开默认的构造函数。
+        <p>该属性接收下列预定义的代码生成器之一:</p>
+        <table cellpadding="5">
+          <tr>
+            <td colspan="2">如果&lt;context&gt; targetRuntime 是 <b>MyBatis3</b>:</td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">ANNOTATEDMAPPER</th>
+            <td>生成的对象是 MyBatis 3.x 映射器基础结构的 Java接口。
+            这些接口将会基于注解和 MyBatis 3.x SqlProviders。不会有XML文件生成。（注：就是纯接口使用注解的形式，不会有XML文件）
+            <p>ANNOTATEDMAPPER 依赖 MyBatis 3.0.4 或更高版本。</p>
+            </td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">MIXEDMAPPER</th>
+            <td>生成的对象是 MyBatis 3.x 映射器基础结构的 Java接口。
+            这些接口将基于注解和XML的混合形式。
+            注解将会用在简单注解可以实现的地方。
+            此客户端不会生成SqlProvider，所有复杂的动态SQL都会生成在XML中。
+            <p>The MIXEDMAPPER 依赖 MyBatis 3.0.4 或更高版本。</p>
+            </td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">XMLMAPPER</th>
+            <td>生成的对象是 MyBatis 3.x 映射器基础结构的 Java接口。
+              这些接口将会依赖于生成的XML文件。</td>
+          </tr>
+          <tr>
+            <td colspan="2">如果 &lt;context&gt; targetRuntime 是 <b>MyBatis3Simple</b>:</td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">ANNOTATEDMAPPER</th>
+            <td>生成的对象是 MyBatis 3.x 映射器基础结构的 Java接口。
+            这些接口将会基于注解和 MyBatis 3.x SqlProviders。不会有XML文件生成。（注：就是纯接口使用注解的形式，不会有XML文件）
+            <p>The ANNOTATEDMAPPER 依赖 MyBatis 3.0.4 或更高版本。</p>
+            </td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">XMLMAPPER</th>
+            <td>生成的对象是 MyBatis 3.x 映射器基础结构的 Java接口。
+            这些接口将会依赖于生成的XML文件。</td>
+          </tr>
+          <tr>
+            <td colspan="2">如果 &lt;context&gt; targetRuntime 是 <b>Ibatis2Java2</b>
+              or <b>Ibatis2Java5</b>:</td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">IBATIS</th>
+            <td>生成的对象将符合（不建议使用）iBATIS的DAO框架。</td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">GENERIC-CI</th>
+            <td>生成的对象将只依赖于SqlMapClient。SqlMapClient将会通过构造参数依赖注入提供。
+                生成的对象将是DAO接口和实现类的形式。
+            </td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">GENERIC-SI</th>
+            <td>生成的对象将只依赖于SqlMapClient。SqlMapClient将会通过setter方法依赖注入提供。
+                生成的对象将是DAO接口和实现类的形式。
+            </td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">SPRING</th>
+            <td>生成的对象将符合Spring的DAO框架。</td>
+          </tr>
+        </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">targetPackage</td>
+    <td>这个包用于放置生成的接口和实现类。
+        在默认的生成器中，属性"enableSubPackages"用来控制如何计算实际的包。
+        如果是true，如果表的catalog和schema存在，就将他们作为子包加起来。
+        如果"enableSubPackages"是false（默认值），计算的package将是targetPackage属性指定的值。
+        MBG 将创建所需的生成包的文件夹。
+        <p><b>注:</b> 实现类的包可以通过指定下面会提到的可选的 <code>implementationPackage</code> 属性。</p></td>
+  </tr>
+  <tr>
+    <td valign="top">targetProject</td>
+    <td>这用来指定生成接口和类的目标项目。
+        当在Eclipse环境中运行时，此选项指定保存对象的位置的项目和源文件夹。
+        在其他环境中，此值应为本地文件系统上的现有目录。
+        如果它不存在，MBG不会创建它。</td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">implementationPackage</td>
+    <td>如果指定了该属性，实现类就会生成在这个包中。
+      在默认的生成器中，属性"enableSubPackages"用来控制如何计算实际的包。
+      如果是true，如果表的catalog和schema存在，就将他们作为子包加起来。
+      如果"enableSubPackages"是false（默认值），计算的package将是targetPackage属性指定的值。
+      MBG 将创建所需的生成包的文件夹。</td>
+  </tr>
+</table>
+
+<h2>子元素</h2>
+<ul>
+  <li><a href="property.html">&lt;property&gt;</a> (0..N)</li>
+</ul>
+
+<h2>支持的属性</h2>
+<p>这个表格列出了所有可以通过<a href="property.html">&lt;property&gt;</a>子元素进行设置的属性：</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性名</th>
+    <th>属性值</th>
+  </tr>
+  <tr>
+    <td valign="top">enableSubPackages</td>
+    <td>这个属性用来选择MGB是否根据基于目录和内省表来生成不同的Java包。
+        <p>例如，假设某个表MYTABLE在MYSCHMA的schema中，也假设targetPackage属性的值设置为"com.mycompany"。
+        如果此属性为true，为这个表生成的DAO接口和类将被放置在包"com.mycompany.myschema"中。
+        如果此属性是false，生成的SQL映射将被放在"com.mycompany" schema中。</p>
+        <p><i>默认值是 false</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">exampleMethodVisibility</td>
+    <td>此属性用来设置不同"ByExample"方法的可见性 - selectByExample, deleteByExample等等。
+        如果没有指定，这些方法将会是公开的的，并将在接口中声明。
+        此属性使您可以隐藏这些方法如果您只想使用它们来执行其他专门的方法。
+        <table cellpadding="5">
+          <tr>
+            <th nowrap="nowrap" valign="top">public</th>
+            <td><i>这是默认值</i><br/>
+              生成实现类中的方法将是公开的，并将该接口中声明的方法。</td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">private</th>
+            <td>
+              生成实现类中的方法将是private的，也不会在接口中声明。
+            </td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">protected</th>
+            <td>
+              生成实现类中的方法将是protected的，也不会在接口中声明。
+            </td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">default</th>
+            <td>生成实现类中的方法将是包内可见的，也不会在接口中声明。
+            </td>
+          </tr>
+        </table>
+        <p><b>重要提示:</b> 如果目标运行时是MyBatis3，则将忽略此属性。</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">methodNameCalculator</td>
+    <td>此属性用于选择一个方法名称计算器。
+        方法名称计算器可以用来为DAO方法提供不同的名称。
+        您可以选择一个预定义的值。
+        如果提供的选项都适合您的环境，
+        也可以指定一个实现了<code>org.mybatis.generator.api.DAOMethodNameCalculator</code>接口的
+        完全限定名称。
+        <table cellpadding="5">
+          <tr>
+            <th nowrap="nowrap" valign="top">default</th>
+            <td><i>这是默认值</i><br/>
+              生成的方法名称会很简单("insert",
+              "updateByPrimaryKey"等等)。</td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">extended</th>
+            <td>生成的方法名称将包括与方法关联的实体对象的名称("insertWidget", "updateWidgetByPrimaryKey"等等)。
+            </td>
+          </tr>
+        </table>
+        <p><b>重要提示:</b> this property is ignored if the target runtime is
+        MyBatis3.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">rootInterface</td>
+    <td>此属性用于指定一个所有生成的接口都继承的父接口。
+      这个值可以通过表配置的 <code>rootInterface</code> 属性覆盖。
+      <p><b>重要:</b> MBG 不验证接口是否存在或者是否是一个有效的接口。</p>
+      <p>如果指定，这个属性值应该是一个全限定接口名称(例如 com.github.abel533.mapper.Mapper)。</p></td>
+  </tr>
+  <tr>
+    <td valign="top">useLegacyBuilder</td>
+    <td>如果为true，那么客户端将使用SqlBuilder为MyBatis生成动态SQL。
+        在MyBatis 3.2或以后版本，这个SqlBuilder废弃了，用了一个新的SQL类替代。
+        如果是false，MBG会使用新的SQL生成器生成客户端代码。
+        <p><i>默认值是 false</i></p></td>
+  </tr>
+</table>
+
+<h2>示例</h2>
+<p>此元素指定我们总希望生成的接口和对象在"text.model'包中，并且我们希望使用基于schema和catalog的子包。
+它还指定了我们想使用为MyBatis3的XML配置文件的mapper接口。</p>
+<pre>
+&lt;javaClientGenerator targetPackage="test.model"
+     targetProject="\MyProject\src" type="XMLMAPPER"&gt;
+  &lt;property name="enableSubPackages" value="true" /&gt;
+&lt;/javaClientGenerator&gt;
+</pre>
+
+</body>
+</html>

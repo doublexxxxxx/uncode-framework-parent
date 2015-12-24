@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;sqlMapGenerator&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;sqlMapGenerator&gt; 元素</h1>
+<p>&lt;sqlMapGenerator&gt; element 用于定义SQL映射生成器的属性。
+SQL映射生成器为每一个内省的表生成MyBatis/iBATIS形式的XML文件。</p>
+<p>如果目标是iBATIS2，那么这个元素是<a href="context.html">&lt;context&gt;</a> 元素的一个必须的子元素。</p>
+<p>如果目标是MyBatis3，那么只有当您选择javaClientGenerator需要XML时，他才是
+<a href="context.html">&lt;context&gt;</a> 元素的一个必须的子元素。</p>
+<p>如果不指定一个javaClientGenerator，则适用以下规则:</p>
+<ul>
+  <li>如果您指定一个sqlMapGenerator，那么MBG将只生成SQL映射的XML文件和模型对象。</li>
+  <li>如果您没有指定一个sqlMapGenerator，那么MBG将只会生成模型对象。</li>
+</ul>
+<h2>必选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">targetPackage</td>
+    <td>这个包用于放置生成的SQL映射文件。
+        在默认的生成器中，属性"enableSubPackages"用来控制如何计算实际的包。
+        如果是true，如果表的catalog和schema存在，就将他们作为子包加起来。
+        如果"enableSubPackages"是false（默认值），计算的package将是targetPackage属性指定的值。
+        MBG 将创建所需的生成包的文件夹。</td>
+  </tr>
+  <tr>
+    <td valign="top">targetProject</td>
+    <td>这用来指定生成SQL映射的目标项目。
+        当在Eclipse环境中运行时，此选项指定保存对象的位置的项目和源文件夹。
+        在其他环境中，此值应为本地文件系统上的现有目录。
+        如果它不存在，MBG不会创建它。</td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<p>无</p>
+
+<h2>子元素</h2>
+<ul>
+  <li><a href="property.html">&lt;property&gt;</a> (0..N)</li>
+</ul>
+
+<h2>支持的属性</h2>
+<p>下面的表格列出了所有可用的 <a href="property.html">&lt;property&gt;</a> 子元素:</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性名</th>
+    <th>属性值</th>
+  </tr>
+  <tr>
+    <td valign="top">enableSubPackages</td>
+    <td>这个属性用来选择MGB是否根据基于目录和内省表来生成不同的Java包。
+      <p>例如，假设某个表MYTABLE在MYSCHMA的schema中，也假设targetPackage属性的值设置为"com.mycompany"。
+        如果此属性为true，为这个表生成的DAO接口和类将被放置在包"com.mycompany.myschema"中。
+        如果此属性是false，生成的SQL映射将被放在"com.mycompany" schema中。</p>
+      <p><i>默认值是 false</i></p></td>
+  </tr>
+</table>
+
+<h2>示例</h2>
+<p>此元素指定我们总希望生成的SQL映射文件在"text.model'包中，并且我们希望使用基于schema和catalog的子包。
+  它还指定了我们想使用为MyBatis3的XML配置文件的mapper接口。</p>
+<pre>
+&lt;sqlMapGenerator targetPackage="test.model"
+     targetProject="\MyProject\src"&gt;
+  &lt;property name="enableSubPackages" value="true" /&gt;
+&lt;/sqlMapGenerator&gt;
+</pre>
+
+</body>
+</html>

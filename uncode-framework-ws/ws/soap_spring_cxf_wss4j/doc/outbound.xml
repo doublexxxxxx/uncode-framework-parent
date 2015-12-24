@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+        <ns2:sayResponse xmlns:ns2="http://soap_spring_cxf_wss4j.ws.demo/">
+            <return>hello world</return>
+        </ns2:sayResponse>
+    </soap:Body>
+</soap:Envelope>

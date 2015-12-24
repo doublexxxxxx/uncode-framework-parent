@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>MyBatis Generator 快速入门指南</title>
+  <link rel="stylesheet" type="text/css" href="mbgstyle.css" />
+</head>
+<body>
+<h1>MyBatis Generator 快速入门指南</h1>
+<p>若要启动并快速运行 MyBatis Generator（MBG），请按以下步骤进行:</p>
+<ol>
+  <li>创建并填写适当的配置文件。
+    至少，您必须指定:
+    <ol type="a">
+      <li><code>&lt;jdbcConnection&gt;</code> 元素定义如何连接目标数据库</li>
+      <li><code>&lt;javaModelGenerator&gt;</code> 元素来指定生成 Java 模型对象所属的包</li>
+      <li><code>&lt;sqlMapGenerator&gt;</code> 元素来指定生成 SQL 映射文件所属的包和的目标项目</li>
+      <li>(可选的) <code>&lt;javaClientGenerator&gt;</code> 元素来指定目标包和目标项目生成的客户端接口和类
+        （如果您不想生成 Java 客户端代码您可以省略<code>&lt; javaClientGenerator &gt;</code> 元素）</li>
+    </ol>
+    <p>查看 <a href="configreference/xmlconfig.html">XML 配置文件参考</a>
+       一个配置文件的例子.</p>
+  </li>
+  <li>将文件保存在一些方便的位置(例如 \temp\generatorConfig.xml)</li>
+  <li>按下面的方式从命令行运行 MBG:
+    <pre>
+
+      java -jar mybatis-generator-core-x.x.x.jar -configfile \temp\generatorConfig.xml -overwrite
+    </pre>
+    <p>这会告诉 MBG 使用配置文件去运行。 MBG还会覆盖已经存在的同名Java文件。
+      如果您想保留已经存在的Java文件，您可以忽略 <code>-overwrite</code> 参数。
+      如果存在冲突, MBG 会用一个唯一的名字保存新生成的文件（例如：MyClass.java.1)。</p>
+  </li>
+  <li>MBG运行后, 您将需要创建或修改的标准 MyBatis 或 iBATIS 配置文件来使用新生成的代码。查看
+      <a href="afterRunning.html">运行 MyBatis Generator 后的任务</a> 页面获取更多信息。</li>
+</ol>
+<p><b>重要:</b>为iBATIS2生成的代码需要在您的 iBATIS 配置中启用了该命名空间。
+  查看 <a href="afterRunning.html">运行 MyBatis Generator 后的任务</a> 页面获取更多信息。</p>
+</body>
+</html>

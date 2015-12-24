@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>MyBatis Generator介绍</title>
+  <link rel="stylesheet" type="text/css" href="mbgstyle.css" />
+</head>
+<body>
+<h1>MyBatis Generator介绍</h1>
+<p>MyBatis Generator (MBG) 是一个Mybatis的代码生成器 <a target="_blank" href="http://mybatis.org">MyBatis</a>
+ 和 <a target="_blank" href="http://ibatis.apache.org">iBATIS</a>.
+ 他可以生成Mybatis各个版本的代码，和iBATIS 2.2.0版本以后的代码。
+ 他可以内省数据库的表（或多个表）然后生成可以用来访问（多个）表的基础对象。
+ 这样和数据库表进行交互时不需要创建对象和配置文件。
+ MBG的解决了对数据库操作有最大影响的一些简单的CRUD（插入，查询，更新，删除）操作。
+ 您仍然需要对联合查询和存储过程手写SQL和对象。
+</p>
+<p>MyBatis Generator 会生成:</p>
+<ul>
+  <li>匹配表结构的Java POJO，可能包括:
+    <ul>
+      <li>一个和表主键匹配的类(如果存在主键[注:只有联合主键会有])</li>
+      <li>一个包含了非主键字段的类(BLOB字段除外[注:单字段做主键时这里会包含])</li>
+      <li>一个包含了BLOB字段的类 (如果表包含了BLOB字段)</li>
+      <li>一个允许动态查询、更新和删除的类[注:指的是Example查询]</li>
+    </ul>
+    <p>这些类之间会有适当的继承关系。
+       请注意可以配置生成器来生成不同类型的 POJO 的层次结构。
+       例如，如果您愿意您可能会选择针对每个表生成一个单独的实体对象。</p>
+  </li>
+  <li>MyBatis/iBATIS 兼容 SQL 映射 XML 文件。MBG 在配置中为每个表简单的 CRUD 操作生成 SQL。
+      生成的 SQL 语句包括：
+    <ul>
+      <li>insert (插入)</li>
+      <li>update by primary key (根据主键更新记录)</li>
+      <li>update by example (根据条件更新记录)</li>
+      <li>delete by primary key (根据主键删除记录)</li>
+      <li>delete by example (根据条件删除记录)</li>
+      <li>select by primary key (根据主键查询记录)</li>
+      <li>select by example (根据条件查询记录集)</li>
+      <li>count by example (根据条件查询记录总数)</li>
+    </ul>
+   <p>根据表的结构，生成的这些语句会有不同的变化（例如，如果表中没有主键，那么 MBG 将不会生成update by primary key方法）。</p>
+  </li>
+  <li>Java客户端类会适当的使用上面的对象，生成Java客户端类时可选的。
+    MBG会为MyBatis 3.x生成如下客户端类：
+    <ul>
+      <li>一个可以和MyBatis 3.x一起使用的mapper接口类</li>
+    </ul>
+    MBG会为iBATIS 2.x生成如下的客户端类：
+    <ul>
+      <li>符合
+          <a target="_blank" href="http://www.springframework.org">Spring</a> 框架的DAO类。</li>
+      <li>只使用iBATIS SQL映射API的DAO。
+          这种DAO可以通过下面两种方式生成：提供<code>SqlMapClient</code>通过构造方法或者setter注入。</li>
+      <li>符合iBATIS DAO 框架的DAO (iBATIS可选的一部分，这一框架已经过时，我们建议您使用Spring框架替代)。</li>
+    </ul>
+  </li>
+</ul>
+
+<p>MyBatis generator 可以在迭代开发环境中良好的运行，
+  在持续的构建环境中作为一个ant任务或maven插件。
+  运行MBG时要记住以下重要的事：</p>
+
+<ol>
+  <li>MBG 会自动合并已经存在并且和新生成的文件重名的 XML。MBG 不会覆盖您对已经生成xml所做的修改。
+      您可以反复的运行而不必担心失去您自定义的更改。
+      MBG 将取代所有以前运行中生成的 XML 元素。
+      </li>
+  <li>MBG <b>不会</b> 合并 Java 文件,他可以覆盖已经存在的文件或者保存新生成的文件为一个不同的唯一的名字。
+      您可以手动合并这些更改。
+      当您使用<a target="_blank" href="http://www.eclipse.org">Eclipse</a>
+      插件时, MBG 可以自动合并 Java 文件.</li>
+</ol>
+
+<h2>依赖项</h2>
+<p>MBG依赖JRE,需要JRE6.0或以上版本。
+此外，还有一个继承了DatabaseMetaData接口的JDBC驱动。
+特别是<code>getColumns</code>和<code>getPrimaryKeys</code>两个方法时必须的。</p>
+
+<h2>支持</h2>
+<p>通过Mybatis用户邮件列表提供对Mybatis generator的支持。
+您可以通过谷歌订阅或查看邮件列表的代码:</p>
+
+<blockquote>
+  <p>
+  <a target="_blank" href="http://groups.google.com/group/mybatis-user">http://groups.google.com/group/mybatis-user</a>
+  </p>
+</blockquote>
+
+<p>如果您认为您找到了一个 bug，在您创建新的Issue前，请在用户列表中询问一下。
+如果您发现一个 bug，或者有新的功能要求，您可以在github上打开一个新的Issue：</p>
+<blockquote>
+  <p>
+  <a target="_blank" href="https://github.com/mybatis/generator/issues">
+    https://github.com/mybatis/generator/issues
+  </a>
+  </p>
+</blockquote>
+
+<h2>译者</h2>
+<p>译者水平有限，如果您发现翻译不通顺的地方，您可以在下面的地址创建Issue：</p>
+<blockquote>
+  <p>
+    <a target="_blank" href="http://git.oschina.net/free/mybatis-generator-core/issues">
+      http://git.oschina.net/free/mybatis-generator-core/issues
+    </a>
+  </p>
+</blockquote>
+<h3>译者列表</h3>
+<ul>
+  <li>abel533(isea533)
+    <ul>
+      <li>github:<a href="https://github.com/abel533" target="_blank">https://github.com/abel533</a></li>
+      <li>gitosc:<a href="http://git.oschina.net/free" target="_blank">http://git.oschina.net/free</a></li>
+      <li>blog:<a href="http://blog.csdn.net/isea533" target="_blank">http://blog.csdn.net/isea533</a></li>
+    </ul>
+  </li>
+  <li>hs598375774sa
+    <ul>
+      <li>oschina:<a href="http://my.oschina.net/hssa" target="_blank">http://my.oschina.net/hssa</a></li>
+    </ul>
+  </li>
+  <li>'  ╃锦色ㄨ年华²º¹⁴</li>
+</ul>
+</body>
+</html>

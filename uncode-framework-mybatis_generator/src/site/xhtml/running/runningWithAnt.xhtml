@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>使用Ant运行 MyBatis Generator </title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>使用Ant运行 MyBatis Generator </h1>
+<p>MyBatis Generator  (MBG) 包含一个简单的 Ant 任务。这个任务必须定义在您的
+  build.xml 文件中。任务可以几个参数。这里是一个 build.xml 文件的例子:</p>
+<pre>
+   &lt;project default="genfiles" basedir="."&gt;
+     &lt;property name="generated.source.dir" value="${basedir}" /&gt;
+
+     &lt;target name="genfiles" description="Generate the files"&gt;
+       &lt;taskdef name="mbgenerator"
+                classname="org.mybatis.generator.ant.GeneratorAntTask"
+                classpath="mybatis-generator-core-x.x.x.jar" /&gt;
+       &lt;mbgenerator overwrite="true" configfile="generatorConfig.xml" verbose="false" &gt;
+         &lt;propertyset&gt;
+           &lt;propertyref name="generated.source.dir"/&gt;
+         &lt;/propertyset&gt;
+       &lt;/mbgenerator&gt;
+     &lt;/target&gt;
+   &lt;/project&gt;
+</pre>
+
+<p>MyBatis Generator  任务属性如下:</p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+  <th>属性</th>
+  <th>值</th>
+</tr>
+<tr>
+  <td>configfile (必须的)</td>
+  <td>指定配置文件的名称。</td>
+</tr>
+<tr>
+  <td>overwrite (可选的)</td>
+  <td>如果指定了该参数，如果生成的java文件存在已经同名的文件，新生成的文件会覆盖原有的文件。
+    如果没有指定该参数，如果存在同名的文件，MBG会给新生成的代码文件生成一个唯一的名字(例如： MyClass.java.1, MyClass.java.2 等等)。
+    <b>重要: 生成器一定会自动合并或覆盖已经生成的XML文件。</b></td>
+</tr>
+<tr>
+  <td>contextids (可选的)</td>
+  <td>如果指定了该参数，逗号隔开的这些context会被执行。
+    这些指定的context必须和配置文件中 &lt;context&gt; 元素的 <code>id</code> 属性一致。
+    只有指定的这些contextid会被激活执行。如果没有指定该参数，所有的context都会被激活执行。</td>
+</tr>
+<tr>
+  <td>tables (可选的)</td>
+  <td>如果指定了该参数，逗号隔开的这个表会被运行，
+    这些表名必须和 &lt;table&gt; 配置中的表面完全一致。只有指定的这些表会被执行。
+    如果没有指定该参数，所有的表都会被执行。
+    按如下方式指定表明: <br/><br/>
+    <code>table</code><br/>
+    <code>schema.table</code><br/>
+    <code>catalog..table</code><br/>
+    等等。</td>
+</tr>
+<tr>
+  <td>verbose (可选的)</td>
+  <td>如果设置为 "true", "yes"等等,MBG会将操作信息输出到 ant 控制台 (如果 Ant 在verbose模式下运行)。默认值是 "false"。</td>
+</tr>
+</table>
+
+<p>注意:</p>
+<ul>
+  <li>&lt;taskdef&gt;标记中的类路径用于告诉 Ant MBG JAR 文件在哪里。
+  这是可选的，除非您将 MBG 添加到 Ant 类路径中 Ant 手册所描述的其他地方。</li>
+   <li>任务的名称可以使任何您想要的, "mbgenerator" 只是一个简单的例子。</li>
+   <li>该任务支持可选嵌套的 <code>&lt; propertyset &gt;</code> 元素，这是标准的 Ant 属性设置的类型。
+       这可以用于将参数传递到配置文件。例如，上面提到
+       <code>generated.source.dir</code>这个属性可以在配置文件中使用<code>${generated.source.dir}</code>进行使用。
+   </li>
+   <li>如果没有指定配置文件中的一个属性，这个属性将会原样输出。</li>
+</ul>
+</body>
+</html>

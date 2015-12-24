@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin">
+			<property name="suppressJavaInterface" value="false" />
+		</plugin>
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		<plugin type="org.mybatis.generator.plugins.MapperConfigPlugin">
+			<property name="targetPackage" value="com.uncodeframework.core.mybatis.mapperconfig" />
+			<property name="targetProject" value="src/main/java" />
+		</plugin>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/uncode-cluster_cloud1"
+			userId="root" password="root">
+		</jdbcConnection>
+		
+		<javaModelGenerator targetPackage="com.uncodeframework.core.mybatis.model"
+			targetProject="src/main/java" />
+		
+		<sqlMapGenerator targetPackage="com.uncodeframework.core.mybatis.mappers"
+			targetProject="src/main/resources" />
+		
+		<javaClientGenerator targetPackage="com.uncodeframework.core.mybatis.mapper"
+			targetProject="src/main/java" type="XMLMAPPER" />
+		
+		<table tableName="%">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+	</context>
+</generatorConfiguration>

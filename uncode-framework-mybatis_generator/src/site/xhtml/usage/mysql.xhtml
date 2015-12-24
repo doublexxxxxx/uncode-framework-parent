@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>MySql 使用注意事项</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>MySql 使用注意事项</h1>
+<h2>无符号类型</h2>
+<p>MySql支持有符号，无符号，数字类型字段。这些不是JDBC类型，因此MyBatis
+生成器不能自动转换这种类型的字段。JAVA数据类型都是有符号的，
+当使用无符号类型时这就会导致缺失精度。可以使用
+<code>&lt;columnOverride&gt;</code> 解决MySql无符号数值类型的字段。下面是一个如何处理无符号bigint字段类型例子:</p>
+<pre>
+  &lt;table tableName="ALLTYPES" &gt;
+    &lt;columnOverride column="UNSIGNED_BIGINT_FIELD" javaType="java.lang.Object" jdbcType="LONG" /&gt;
+  &lt;/table&gt;
+</pre>
+<p>您还必须自己强制将返回值转换为适当的类型(在上面这种情况下，需要转换为
+<code>java.math.BigInteger</code>)。</p>
+</body>
+</html>

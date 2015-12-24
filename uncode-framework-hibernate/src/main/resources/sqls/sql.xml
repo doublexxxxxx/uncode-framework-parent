@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqls-configs PUBLIC "-//SQLS//MAIN CONFIG DTD//EN" "http://kf.hqhop.com:8888/hqhop-framework-sqls.dtd">
+<sqls-configs>
+	<select id="select" resultClass="com.uncodeframework.core.hibernate.entity.User">
+		select * from user where id =:id
+	</select>
+	<!-- <import resource="classpath:sqls/test.xml" /> -->
+</sqls-configs>

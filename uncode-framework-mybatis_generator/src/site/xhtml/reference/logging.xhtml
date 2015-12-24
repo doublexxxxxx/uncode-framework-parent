@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>日志信息</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css"></link>
+</head>
+<body dir="ltr">
+<h1>日志信息</h1>
+<p>MyBatis Generator（MBG）报告日志记录的几种不同的方式：</p>
+<ul>
+  <li>MBG每次运行的时候会记录并且显示警告信息。
+    这些消息的目的是告诉用户需要注意可能存在的重要事件，也可能不是。
+    例如文件正在被覆盖，或者非致命的配置错误等等。
+    无论配置和命令行参数怎么配置，警告总是会显示。</li>
+  <li>MBG生成器每次运行的时候可能会或者不会显示进度信息。
+    这些信息用来告诉用户代码生成的器的进度信息。
+    这些信息默认不显示，但是可以通过指定<code>-verbose</code>命令行参数进行显示。
+    或者您通过Ant任务运行MBG，您可以通过设置<code>verbose</code> 属性为 <code>true</code>,
+    这样Ant就会运行在verbose模式。</li>
+  <li>最后，MBG将生成跟踪(记录)详细的调试消息。本页说明如何启用这些语句。</li>
+</ul>
+
+<p>一般来说，MBG不会重复消息。所以MBG生成警告的时候这个警告通常还没记录。
+  在某些情况下需要启用日志记录以及要求MBG记录详细进度消息的时候可能会有用。
+  这可能会产生大量的输出，但是仍然会提供一个MBG运行期间完整的内部事件描述。</p>
+
+<p>如果Log4J在运行时的类路径中，MBG就会使用Apache Log4J进行记录。
+  查阅<a href="http://logging.apache.org/log4j/">http://logging.apache.org/log4j/</a>
+  获取有关Log4J的详细信息。如果Log4J不在运行时的类路径中，MBG会使用标准的Java日志记录。</p>
+<p>即使运行时类路径中存在Log4J，您仍然想强制使用标准的Java日志记录，
+  您可以在命令行参数指定<code>-forceJavaLogging</code>
+  ，或者当您通过Java执行MBG时使用执行下面的方法：</p>
+<p><code>org.mybatis.generator.logging.LogFactory.forceJavaLogging();</code></p>
+<p><b>重要:</b> 您必须将上面的方法放在任何MBG代码<i>之前</i>。</p>
+
+<h2>提供备用的实现</h2>
+<p>如果您喜欢使用不同的日志实现比Log4J的或标准的Java日志记录，您可能会提供一个备用实施的关键日志界面如下：</p>
+<ol>
+  <li>创建<code>org.mybatis.generator.logging.Log</code>接口的实现，实现您选择的日志实现的关键日志方法。</li>
+  <li>创建<code>org.mybatis.generator.logging.AbstractLogFactory</code>接口的实现，将返回您<code>Log</code>实现的实例。</li>
+  <li>配置MBG通过调用方法来使用新的LogFactory <code>org.mybatis.generator.logging.LogFactory.setLogFactory(AbstractLogFactory)</code>并提供您的实例<code>AbstractLogFactory</code>实现。</li>
+</ol>
+
+<h2>配置Log4J日志</h2>
+<p>下面是一个log4j配置文件示例：</p>
+<pre>
+# Set root logger
+log4j.rootLogger=INFO, A1
+
+# A1 is set to be a ConsoleAppender.
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%-4r %-5p %c - %m%n
+
+# MBG logging configuration...
+log4j.logger.org.mybatis.generator=DEBUG
+</pre>
+<p>这个文件指示Log4J将MBG所有调试信息输出到控制台。要使用此文件：</p>
+<ol>
+  <li>运行时类路径的根目录创建一个名为<code>log4j.properties</code>的文件</li>
+  <li>将上面的条目复制到新文件</li>
+  <li>运行MBG时，Log4J的JAR文件也需要在运行时类路径下。</li>
+</ol>
+<p>您应该可以在控制台中看到很多日志信息。</p>
+<p>如果您喜欢，您也可以配置log4j任何其他支持的方法。</p>
+
+<h2>配置Java日志记录</h2>
+<p>下面是一个Java日志记录配置的示例文件:</p>
+<pre>
+# 指定root logger要创建的处理程序
+# (所有的loggers都是root logger的孩子)
+handlers = java.util.logging.ConsoleHandler
+
+# 为 root logger 设置默认日志记录级别
+.level = INFO
+
+# Set the default logging level for new ConsoleHandler instances
+java.util.logging.ConsoleHandler.level = ALL
+
+# Set the default formatter for new ConsoleHandler instances
+java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
+
+# Set the default logging level for the logger named org.mybatis.generator
+org.mybatis.generator.level = FINE
+</pre>
+<p>这个文件将指导Java写的所有MBG调试消息到控制台。要使用此文件：</p>
+<ol>
+  <li>创建一个名为<code>logging.properties</code> （或者您喜欢的任何文件名 ​​）的文件。该文件可以在文件系统中存在的任何地方（例如，在一个<code>\temp</code>目录）。</li>
+  <li>将上述条目复制到新文件</li>
+  <li>运行MBG时带上这个VM参数：<br />
+    <code>-Djava.util.logging.config.file=\temp\logging.properties</code> （指定您使用的实际的文件名 ​​和目录）</li>
+</ol>
+<p>在控制台中您将看到许多日志信息。</p>
+<p>如果您喜欢，您还可以配置Java日志记录为其他支持的方法。</p>
+
+</body>
+</html>

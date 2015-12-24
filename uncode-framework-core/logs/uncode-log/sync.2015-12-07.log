@@ -1,0 +1,55 @@
+[DEBUG] 2015-12-07  10:47:37.538 [main] org.uncodeframework.core.common.mail.simple.ConfigLoader - load mail setting success,file path:mail/mail.properties
+[DEBUG] 2015-12-07  10:47:37.555 [main] org.uncodeframework.core.common.mail.simple.MailSender - set system properties success ：mail.smtp.host= cn-china-01.ap.mmm.com
+[DEBUG] 2015-12-07  10:47:37.621 [main] org.uncodeframework.core.common.mail.simple.MailSender -  create session and mimeMessage success
+[DEBUG] 2015-12-07  10:47:37.622 [main] org.uncodeframework.core.common.mail.simple.MailSender - set smtp auth success：mail.smtp.auth= true
+[DEBUG] 2015-12-07  10:47:37.622 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail subject success, subject= test
+[DEBUG] 2015-12-07  10:47:37.624 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail body content success,mailBody= ted
+[DEBUG] 2015-12-07  10:47:37.630 [main] org.uncodeframework.core.common.mail.simple.MailSender - mail add file success,filename= D:/dat.txt
+[DEBUG] 2015-12-07  10:47:37.633 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail receiver success,receiver = 75933651@qq.com
+[DEBUG] 2015-12-07  10:47:37.634 [main] org.uncodeframework.core.common.mail.simple.MailSender -  set mail sender and nickname success , sender= AutoSamplingChina@mmm.com,nickname==?utf-8?B?56e76IGU5L2w5rGH?=
+[DEBUG] 2015-12-07  10:47:37.745 [main] org.uncodeframework.core.common.mail.simple.MailSender - set system properties success ：mail.smtp.host= cn-china-01.ap.mmm.com
+[DEBUG] 2015-12-07  10:47:37.746 [main] org.uncodeframework.core.common.mail.simple.MailSender -  create session and mimeMessage success
+[DEBUG] 2015-12-07  10:47:37.746 [main] org.uncodeframework.core.common.mail.simple.MailSender - set smtp auth success：mail.smtp.auth= true
+[DEBUG] 2015-12-07  10:47:37.747 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail subject success, subject= test
+[DEBUG] 2015-12-07  10:47:37.747 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail body content success,mailBody= 普通邮件
+[DEBUG] 2015-12-07  10:47:37.747 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail receiver success,receiver = 75933651@qq.com
+[DEBUG] 2015-12-07  10:47:37.748 [main] org.uncodeframework.core.common.mail.simple.MailSender -  set mail sender and nickname success , sender= AutoSamplingChina@mmm.com,nickname==?utf-8?B?56e76IGU5L2w5rGH?=
+[DEBUG] 2015-12-07  10:47:37.800 [main] org.uncodeframework.core.common.mail.simple.MailSender - set system properties success ：mail.smtp.host= cn-china-01.ap.mmm.com
+[DEBUG] 2015-12-07  10:47:37.801 [main] org.uncodeframework.core.common.mail.simple.MailSender -  create session and mimeMessage success
+[DEBUG] 2015-12-07  10:47:37.801 [main] org.uncodeframework.core.common.mail.simple.MailSender - set smtp auth success：mail.smtp.auth= true
+[DEBUG] 2015-12-07  10:47:37.984 [main] org.uncodeframework.core.common.mail.simple.TemplateFactory - the template is not found  in the map,template name :template_1.ftl
+[DEBUG] 2015-12-07  10:47:38.006 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail subject success, subject= test
+[DEBUG] 2015-12-07  10:47:38.007 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail body content success,mailBody= <h1>test</h1>模板1内容
+[DEBUG] 2015-12-07  10:47:38.007 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail receiver success,receiver = ixie@mmm.com
+[DEBUG] 2015-12-07  10:47:38.007 [main] org.uncodeframework.core.common.mail.simple.MailSender -  set mail sender and nickname success , sender= AutoSamplingChina@mmm.com,nickname==?utf-8?B?56e76IGU5L2w5rGH?=
+[DEBUG] 2015-12-07  10:47:38.111 [main] org.uncodeframework.core.common.mail.simple.MailSender -  send mail success
+[DEBUG] 2015-12-07  10:56:01.288 [main] org.uncodeframework.core.common.mail.simple.ConfigLoader - load mail setting success,file path:mail/mail.properties
+[DEBUG] 2015-12-07  10:56:01.362 [main] org.uncodeframework.core.common.mail.simple.MailSender - set system properties success ：mail.smtp.host= cn-china-01.ap.mmm.com
+[DEBUG] 2015-12-07  10:56:01.455 [main] org.uncodeframework.core.common.mail.simple.MailSender -  create session and mimeMessage success
+[DEBUG] 2015-12-07  10:56:01.455 [main] org.uncodeframework.core.common.mail.simple.MailSender - set smtp auth success：mail.smtp.auth= true
+[DEBUG] 2015-12-07  10:56:01.964 [main] org.uncodeframework.core.common.mail.simple.TemplateFactory - the template is not found  in the map,template name :template_1.ftl
+[DEBUG] 2015-12-07  10:56:02.004 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail subject success, subject= test
+[DEBUG] 2015-12-07  10:56:02.020 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail body content success,mailBody= <h1>test</h1>模板1内容
+[DEBUG] 2015-12-07  10:56:02.025 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail receiver success,receiver = ixie@mmm.com
+[DEBUG] 2015-12-07  10:56:02.027 [main] org.uncodeframework.core.common.mail.simple.MailSender -  set mail sender and nickname success , sender= AutoSamplingChina@mmm.com,nickname==?utf-8?B?56e76IGU5L2w5rGH?=
+[DEBUG] 2015-12-07  10:56:02.440 [main] org.uncodeframework.core.common.mail.simple.MailSender -  send mail success
+[DEBUG] 2015-12-07  11:06:36.745 [main] org.uncodeframework.core.common.mail.simple.ConfigLoader - load mail setting success,file path:mail/mail.properties
+[DEBUG] 2015-12-07  11:06:36.784 [main] org.uncodeframework.core.common.mail.simple.MailSender - set system properties success ：mail.smtp.host= cn-china-01.ap.mmm.com
+[DEBUG] 2015-12-07  11:06:36.858 [main] org.uncodeframework.core.common.mail.simple.MailSender -  create session and mimeMessage success
+[DEBUG] 2015-12-07  11:06:36.858 [main] org.uncodeframework.core.common.mail.simple.MailSender - set smtp auth success：mail.smtp.auth= true
+[DEBUG] 2015-12-07  11:06:37.128 [main] org.uncodeframework.core.common.mail.simple.TemplateFactory - the template is not found  in the map,template name :template_1.ftl
+[DEBUG] 2015-12-07  11:06:37.143 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail subject success, subject= test
+[DEBUG] 2015-12-07  11:06:37.145 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail body content success,mailBody= <h1>test</h1>模板1内容
+[DEBUG] 2015-12-07  11:06:37.147 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail receiver success,receiver = ixie@mmm.com
+[DEBUG] 2015-12-07  11:06:37.148 [main] org.uncodeframework.core.common.mail.simple.MailSender -  set mail sender and nickname success , sender= AutoSamplingChina@mmm.com,nickname==?utf-8?B?56e76IGU5L2w5rGH?=
+[DEBUG] 2015-12-07  11:06:37.253 [main] org.uncodeframework.core.common.mail.simple.MailSender -  send mail success
+[DEBUG] 2015-12-07  11:18:37.385 [main] org.uncodeframework.core.common.mail.simple.ConfigLoader - load mail setting success,file path:mail/mail.properties
+[DEBUG] 2015-12-07  11:18:37.406 [main] org.uncodeframework.core.common.mail.simple.MailSender - set system properties success ：mail.smtp.host= cn-china-01.ap.mmm.com
+[DEBUG] 2015-12-07  11:18:37.492 [main] org.uncodeframework.core.common.mail.simple.MailSender -  create session and mimeMessage success
+[DEBUG] 2015-12-07  11:18:37.493 [main] org.uncodeframework.core.common.mail.simple.MailSender - set smtp auth success：mail.smtp.auth= true
+[DEBUG] 2015-12-07  11:18:37.743 [main] org.uncodeframework.core.common.mail.simple.TemplateFactory - the template is not found  in the map,template name :template_1.ftl
+[DEBUG] 2015-12-07  11:18:37.763 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail subject success, subject= test
+[DEBUG] 2015-12-07  11:18:37.765 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail body content success,mailBody= <h1>test</h1>模板1内容
+[DEBUG] 2015-12-07  11:18:37.769 [main] org.uncodeframework.core.common.mail.simple.MailSender - set mail receiver success,receiver = ixie@mmm.com
+[DEBUG] 2015-12-07  11:18:37.769 [main] org.uncodeframework.core.common.mail.simple.MailSender -  set mail sender and nickname success , sender= AutoSamplingChina@mmm.com,nickname==?utf-8?B?56e76IGU5L2w5rGH?=
+[DEBUG] 2015-12-07  11:18:37.879 [main] org.uncodeframework.core.common.mail.simple.MailSender -  send mail success

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;columnRenamingRule&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;columnRenamingRule&gt; 元素</h1>
+<p>MyBatis Generator (MBG) 使用 &lt;columnRenamingRule&gt; 元素处理在内省表
+中相应的属性名之前重命名数据库列。
+这对那些存在同一前缀的字段想在生成属性名时去除前缀的表非常有用。
+例子，假设一个表包含以下的列：</p>
+ <ul>
+   <li>CUST_BUSINESS_NAME</li>
+   <li>CUST_STREET_ADDRESS</li>
+   <li>CUST_CITY</li>
+   <li>CUST_STATE</li>
+ </ul>
+<p>生成的所有属性名中如果都包含 CUST的前缀可能会让人不爽。这些前缀可以通过如下方式定义重命名规则:</p>
+
+<p><code>&lt;columnRenamingRule searchString="^CUST_" replaceString="" /&gt;</code></p>
+
+<p>注意，在内部，MBG使用<code>java.util.regex.Matcher.replaceAll</code>方法实现这个功能。
+请参阅有关该方法的文档和在Java中使用正则表达式的例子。</p>
+
+<p>当 &lt;columnOverride&gt; 匹配一列时，这个元素（&lt;columnRenamingRule&gt;）会被忽略。
+  &lt;columnOverride&gt;优先于重命名的规则。</p>
+
+<p>如果指定该选项，重命名规则会在生成属性名前替换列名。
+计算出的属性名可能不同，这取决于 &lt;table&gt; 元素上的 "useActualColumnNames"属性。
+下表显示了如果重命名规则用于字段集上时不同的值:</p>
+
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>列名</th>
+    <th>属性 useActualColumnNames="true"</th>
+    <th>属性 useActualColumnNames="false"</th>
+  </tr>
+  <tr>
+    <td>CUST_BUSINESS_NAME</td>
+    <td>BUSINESS_NAME</td>
+    <td>businessName</td>
+  </tr>
+  <tr>
+    <td>CUST_STREET_ADDRESS</td>
+    <td>STREET_ADDRESS</td>
+    <td>streetAddress</td>
+  </tr>
+  <tr>
+    <td>CUST_CITY</td>
+    <td>CITY</td>
+    <td>city</td>
+  </tr>
+  <tr>
+    <td>CUST_STATE</td>
+    <td>STATE</td>
+    <td>state</td>
+  </tr>
+</table>
+
+<p>这个元素是<a href="table.html">&lt;table&gt;</a> 元素的一个可选的子元素。</p>
+
+<h2>必选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td>searchString</td>
+    <td>定义将被替换的子字符串的正则表达式。</td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td>replaceString</td>
+    <td>这是一个用来替换搜索字符串列每一个匹配项的字符串。如果没有指定，就会使用空字符串。</td>
+  </tr>
+</table>
+
+<h2>子元素</h2>
+<p>无</p>
+
+</body>
+</html>

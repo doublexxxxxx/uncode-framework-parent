@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>扩展Example类</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>扩展Example类</h1>
+<p>在某些情况下可能需要扩展自动生成的example。您可能希望添加特定数据库查询条件(如Oracle ROWNUM支持),或添加除自动生成外的查询条件(如不区分大小写查询)。在这种情况下，您需要扩展自动生成example类来添加这些额外的查询条件。</p>
+
+<h2>一般原则</h2>
+<p>
+MyBatis Generator (MBG)一般情况下一个表名对应一个自动生成"example"类,除非您特殊配置。"example"类动态生成where条件被用于<code>xxxByExample</code>方法。</p>
+
+<p>
+标准的"example"类包含只是标准SQL条件查询功能。在这种情况下,程序特定需要您添加额外条件查询功能。这可能需要添加非标准条件查询或在where条件中使用数据库特定功能。</p>
+
+<p>自动生成"example"类中包含一个内部类实现where条件查询功能。内部类命名为<code>GeneratedCriteria</code>。
+MBG同时也生成了内部类<code>Criteria</code>继承了<code>GeneratedCriteria</code>,您可以使用它在example类中添加您想要的功能。Eclipse插件不会删除<code>Criteria</code>类新增代码(注：只有Eclipse插件,并且有注释和时间戳等要求才能自动合并),因此您无需担心新增代码丢失。</p>
+<p>例如,有一个表叫CUSTOMER。通常,MBG生成一个名为
+<code>CustomerExample</code>的类。在<code>CustomerExample</code>类中添加额外功能,需要在<code>CustomerExample.Criteria</code>类中新增方法。</p>
+
+<h2>扩展vs插件</h2>
+<p>如果您经常扩展自动生成类,写一个插件来实现该功能比手工编写扩展类代码更方便。下面(标题"单条件参数")的插件类能够完成单参数查询
+<code>org.mybatis.generator.plugins.CaseInsensitiveLikePlugin</code>。</p>
+
+<h2>添加条件语句</h2>
+<p>MBG自动生成SQL在运行允许创建无限制where条件。为了完成这个,自动生成SQL支持四大类型条件语句。对应每种类型的SQL语句,<code>GeneratedCriteria</code>
+内部有一个对应的方法用于添加一个动态的where条件。</p>
+
+<h3>1. 简单字符串替换</h3>
+<p>在使用这种类型的条件查询时不需要参数对象替换where条件中。例如:</p>
+<p><code>FIRST_NAME is null</code><br/>
+   <code>LAST_NAME is not null</code></p>
+
+<p>此条件语句<code>GeneratedCriteria</code>类方法是:</p>
+&nbsp;&nbsp;&nbsp;<code>addCriterion(String anyString)</code>
+
+<p>其中"anyString"是字符串替换where子句。该方法适合任何类型。</p>
+
+<p>例如,您想使用SOUNDEX函数完成"类似"搜索功能。在MySQL中,条件语句应该是:</p>
+<code>SOUNDEX(FIRST_NAME) = SOUNDEX('frod')</code>
+<p>此种查询太复杂，可以考虑使用另外一个方法,这种简单字符串替换必须插入到where条件中。在内部类<code>Criteria</code>中添加如下方法:</p>
+<pre>
+public Criteria andFirstNameSoundsLike(String value) {
+  StringBuffer sb = new StringBuffer("SOUNDEX(FIRST_NAME) = SOUNDEX('");
+  sb.append(value);
+  sb.append("')");
+
+  addCriterion(sb.toString());
+
+  return this;
+}
+</pre>
+
+<p>下面代码是在<code>selectByExample</code>方法中使用了刚才新增的方法:</p>
+<pre>
+CustomerExample example = new CustomerExample();
+Criteria criteria = example.createCriteria();
+criteria.andFirstNameSoundsLike("frod");
+List results = selectByExample(example);
+</pre>
+
+<p>这种方法可以添加任何条件语句到where子句中。然而,由于需要保证不同数据类型的正确(最明显的日期、时间和时间戳),所以最好使用参数替换。同时,
+这样操作暴露过多的方法会导致SQL注入问题。如果可能,我们建议使用下面列出的方法之一。</p>
+
+<h3>2. 单条件参数</h3>
+<p>使用这种类型作为条件语句,一个参数替换where条件。例如</p>
+<p><code>FIRST_NAME = ?</code><br/>
+   <code>LAST_NAME &lt;&gt; ?</code></p>
+
+<p>自动生成<code>Criteria</code>类条件方法如下:</p>
+<p>&nbsp;&nbsp;&nbsp;<code>addCriterion(String anyString,Object anyObject,String propertyName)</code></p>
+
+<p>Where:</p>
+<dl>
+  <dt><b>anyString</b></dt>
+  <dd>替换where条件参数子句,如:upper(FIRST_NAME) like</dd>
+  <dt><b>anyObject</b></dt>
+  <dd>条件值</dd>
+  <dt><b>propertyName</b></dt>
+  <dd>条件列名,用于排除潜在错误。</dd>
+</dl>
+
+<p>该方法用于单一参数where条件。</p>
+
+<p>例如,假设您想特定列不区分大小写查询,在MySQL中查询条件如下:</p>
+<code>upper(FIRST_NAME) like ?</code>
+<p>此方法适合单个参数功能-一个参数一个参数值。将下面方法添加到<code>ExtendedCriteria</code>中:</p>
+<pre>
+public ExtendedCriteria andFirstNameLikeInsensitive(String value) {
+  addCriterion("upper(FIRST_NAME) like",
+    value.toUpperCase(),"firstName");
+
+  return this;
+}
+</pre>
+
+<p>下面代码是在<code>selectByExample</code>方法中使用了刚才新增的功能:</p>
+<pre>
+ExtendedExample example = new ExtendedExample();
+ExtendedCriteria criteria = (ExtendedCriteria) example.createCriteria();
+criteria.andFirstNameLikeInsensitive("fred%");
+List results = selectByExample(example);
+</pre>
+
+<h3>3. 列表条件</h3>
+<p>列表条件适用于where条件中多个值的情况。例如:</p>
+<p><code>FIRST_NAME IN (?,?,?)</code><br/>
+<code>LAST_NAME NOT IN (?,?,?,?)</code></p>
+
+<p>由于包含了"in" and "not in"这样的标准查询条件,因此使用起来不太灵活。然而在<code>Criteria</code>类中您会发现有相应的方法,如下:</p>
+
+<p>&nbsp;&nbsp;&nbsp;<code>addCriterion(String anyString,List listOfObjects,String propertyName)</code></p>
+
+<p>Where:</p>
+<dl>
+  <dt><b>anyString</b></dt>
+  <dd>替换where条件参数,如:FIRST_NAME IN</dd>
+  <dt><b>listOfObjects</b></dt>
+  <dd>list对象值替换条件值(在list前有一个开始的括号，一个结束括号在list后)。</dd>
+  <dt><b>propertyName</b></dt>
+  <dd>条件列名,用户排除潜在错误。</dd>
+</dl>
+
+<h3>4. Between条件</h3>
+<p>Between条件参数适用于where条件特定的格式。例如:</p>
+<p><code>FIRST_NAME BETWEEN ? AND ?</code><br/>
+<code>LAST_NAME NOT BETWEEN ? AND ?</code></p>
+
+<p>由于包含了"between" and "not between"这样的标准查询条件,因此使用起来不太灵活。然而在<code>Criteria</code>类中您会发现有相应的方法,如下:</p>
+
+<p>&nbsp;&nbsp;&nbsp;<code>addCriterion(String anyString,Object object1,Object object2,String propertyName)</code></p>
+
+<p>Where:</p>
+<dl>
+  <dt><b>anyString</b></dt>
+  <dd>替换where条件参数,如:FIRST_NAME BETWEEN</dd>
+  <dt><b>object1</b></dt>
+  <dd>替换where条件第一个参数值(object1后会自带一个"and"连接词)。</dd>
+  <dt><b>object2</b></dt>
+  <dd>替换where条件第二个参数值(object2前会自带一个"and"连接词)。</dd>
+  <dt><b>propertyName</b></dt>
+  <dd>条件列名,用户排除潜在错误。</dd>
+</dl>
+</body>
+</html>

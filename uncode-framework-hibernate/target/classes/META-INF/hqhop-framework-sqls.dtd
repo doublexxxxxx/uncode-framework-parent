@@ -1,0 +1,27 @@
+<!--
+	hqhop main config DTD, version 1.0
+	Authors: silentwu (silentwu@sina.cn)
+
+	<!DOCTYPE sqls-configs PUBLIC "-//SQLS//MAIN CONFIG DTD//EN" "http://www.kf.hqhop.com/dtd/hqhop-framework-sqls.dtd">
+-->
+<!--
+	The document root.
+-->
+<!ELEMENT sqls-configs (import | insert | delete | update | select )*>
+
+<!ELEMENT insert (#PCDATA)>
+<!ATTLIST insert id ID #REQUIRED>
+
+<!ELEMENT delete (#PCDATA)>
+<!ATTLIST delete id ID #REQUIRED>
+
+<!ELEMENT update (#PCDATA)>
+<!ATTLIST update id ID #REQUIRED>
+
+<!ELEMENT select (#PCDATA)>
+<!ATTLIST select resultClass CDATA #REQUIRED>
+<!ATTLIST select id ID #REQUIRED>
+
+
+<!ELEMENT import EMPTY>
+<!ATTLIST import resource CDATA #REQUIRED>

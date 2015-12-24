@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;properties&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;properties&gt; 元素</h1>
+<p>&lt;properties&gt; 元素用于指定一个需要在配置中解析使用的外部属性文件。
+属性配置中的任何属性将接受  <code>${property}</code> 这种形式的属性。
+从指定的属性文件中搜索匹配的值，配置的值将会被替换。
+属性文件时正常的Java属性文件的格式。</p>
+
+<p>&lt;properties&gt;元素是
+<a href="generatorConfiguration.html">&lt;generatorConfiguration&gt;</a>
+元素的子元素。</p>
+
+
+<h2>必选属性</h2>
+<p>以下属性是必需的，并且只能有其中一个。</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">resource</td>
+    <td>属性文件的全限定名称。当指定了resource属性，将会从classpath下面搜索属性文件。
+    当指定为
+    <code>com/myproject/generatorConfig.properties</code> 时，他必须存在
+    <code>com.myproject</code> 包下面。</td>
+  </tr>
+  <tr>
+    <td valign="top">url</td>
+    <td>属性文件的URL值。这可以用于指定一个属性文件在文件系统上的特定位置，例如
+    <code>file:///C:/myfolder/generatorConfig.properties</code>。</td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<p>无</p>
+
+<h2>子元素</h2>
+<p>无</p>
+
+</body>
+</html>

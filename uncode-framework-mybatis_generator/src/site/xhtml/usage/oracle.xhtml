@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Oracle 使用注意事项</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>Oracle 使用注意事项</h1>
+<h2>公共同义词</h2>
+<p>如果您想要一个表生成对象公共同义词，您实际生成的对象执行真正的表名-然后在运行的时候修改表名。MyBatis自动生成器支持这样。</p>
+<p>例如，假设有一个公共表名为"FRED"指向表"HR.EMPLOYEES"。下面的配置是基于HR.EMPLOYEES生成的对象，但运行的时候SQL只会指向FRED:</p>
+<pre>
+  &lt;table schema="HR" tableName="EMPLOYEES"&gt;
+    &lt;property name="ignoreQualifiersAtRuntime" value="true" /&gt;
+    &lt;property name="runtimeTableName" value="FRED" /&gt;
+  &lt;/table&gt;
+</pre>
+<h2>Oracle 长数据类型</h2>
+<p>Oracle的JDBC驱动会将LONG类型的列当成JDBC的LONGVARCHAR类型。由于Oracle驱动程序不支持，MyBatis将映射为CLOB。
+因此在使用长数据类型时，您应该在生成器上配置一个列的重写将其映射到JDBC的VARCHAR类型。</p>
+</body>
+</html>

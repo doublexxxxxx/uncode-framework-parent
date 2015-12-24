@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Product</h1>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-inline" method="post" id="product_search_form">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Product Name" id="keyword">
+                </div>
+                <button type="submit" class="btn btn-default">
+                    <i class="fa fa-search"></i> Search
+                </button>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-success" id="product_create">
+                        <i class="fa fa-plus"></i> Create
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Product List</div>
+        <div class="panel-body" id="product_list"></div>
+    </div>
+</div>
+
+<div class="modal" id="product_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="product_modal_submit"><i class="fa fa-save"></i> Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="resources/js/1/global.js"></script>
+<script src="resources/js/1/product_view.js"></script>
+<script src="resources/js/1/product_service.js"></script>
+
+<script>
+    $(function() {
+        // 显示所有产品
+        //$('body').hide(); // 隐藏界面
+        ProductService.retrieveAllProducts(function() {
+            $('body').show(); // 显示界面
+        });
+
+        // 根据关键字查询产品
+        $('#product_search_form').on('submit', function() {
+            var keyword = $('#keyword').val().trim();
+            ProductService.retrieveProductsByName(keyword);
+            return false;
+        });
+
+        // 点击 Edit 按钮，弹出编辑产品对话框
+        $(document).on('click', '#product_table .product_edit', function() {
+            var id = $(this).closest('tr').data('id');
+            ProductService.retrieveProductById(id);
+            $('#product_modal').modal('show');
+            return false;
+        });
+
+        // 点击 Delete 按钮，删除产品
+        $(document).on('click', '#product_table .product_delete', function() {
+            var $tr = $(this).closest('tr');
+            var id = $tr.data('id');
+            var name = $tr.data('name');
+            if (confirm('Do you want to delete this product? [' + name + ']')) {
+                ProductService.deleteProductById(id);
+            }
+            return false;
+        });
+
+        // 点击 Create 按钮，弹出创建产品对话框
+        $('#product_create').on('click', function() {
+            var title = 'Create Product';
+            var product = {
+                id: 0,
+                name: '',
+                price: ''
+            };
+            ProductView.renderProductModal(title, product);
+            $('#product_modal').modal('show');
+        });
+
+        // 点击对话框中的 Save 按钮，创建或更新产品
+        $('#product_modal_submit').on('click', function() {
+            var id = $('#id').val();
+            var product = {
+                name: $('#name').val().trim(),
+                price: parseInt($('#price').val().trim())
+            };
+            if (id == 0) {
+                ProductService.createProduct(product);
+            } else {
+                ProductService.updateProductById(id, product);
+            }
+            $('#product_modal').modal('hide');
+        });
+    });
+</script>
+
+</body>
+</html>

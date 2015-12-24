@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>运行 MyBatis Generator 后的任务</title>
+  <link rel="stylesheet" type="text/css" href="mbgstyle.css" />
+</head>
+<body>
+<h1>运行 MyBatis Generator 后的任务</h1>
+<p>在您运行 MyBatis Generator (MBG)后, 您需要创建或者修改其他的 MyBatis 或 iBATIS 配置文件。
+  主要的任务如下:</p>
+<ul>
+  <li>对 MyBatis 3.x:
+    <ul>
+      <li>创建或修改 MapperConfig.xml 文件</li>
+    </ul>
+  </li>
+  <li>对 iBATIS 2.x:
+    <ul>
+      <li>创建或修改 SqlMapConfig.xml 文件</li>
+      <li>创建或修改 dao.xml 文件 (只有当您使用iBATIS DAO 框架时)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>下面将详细地介绍每个任务。</p>
+
+<h2>更新 MapperConfig.xml 文件 (MyBatis 3.x)</h2>
+<p>MyBatis 3.x 使用了一个 XML 文件, 通常的名字是 <code>MapperConfig.xml</code>,
+声明数据库连接信息, 事务管理方案, 和 将会用在MyBatis会话中的 XML mapper 文件。
+MBG 不会为您创建这个文件，因为它对您执行环境一无所知。然而，一些在此文件中的项目直接涉及 MBG 生成项目。
+请参阅标准 MyBatis 数据映射开发指南有关不同的配置选项的详细信息。</p>
+
+<p>MBG 具体需要在配置文件中的有如下:</p>
+<ul>
+  <li>必须列出MBG 生成的 XML 映射文件</li>
+</ul>
+
+<p>例如,假设MBG已经生成一个名为<code>MyTableMapper.xml</code>的XML映射文件,
+并且该文件已经在您的项目的<code>test.xml</code>包中。
+  <code>MapperConfig.xml</code> 文件应该有这些条目:</p>
+<pre>
+  &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+  &lt;!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;
+
+  &lt;configuration&gt;
+    &lt;!-- 安装适合于您的环境的事务管理器和数据源 --&gt;
+    &lt;environments default"..."&gt;
+      &lt;environment id"..."&gt;
+        &lt;transactionManager type="..."&gt;
+        &lt;/transactionManager&gt;
+        &lt;dataSource type="..."&gt;
+        &lt;/dataSource&gt;
+      &lt;/environment&gt;
+    &lt;/environments&gt;
+
+    &lt;mappers&gt;
+      &lt;!-- XML mapper 文件应该在这里列出来 --&gt;
+      &lt;mapper resource="test/xml/MyTable_SqlMap.xml" /&gt;
+    &lt;/mappers&gt;
+
+  &lt;/configuration&gt;
+</pre>
+
+<p>如果有多个XML mapper文件(这很常见)，
+然后您可以通过反复的使用<code>&lt;mapper&gt;</code>
+按任意顺序在<code>&lt;mappers&gt;</code>元素中列出这些文件。</p>
+
+<p><b>生成 MapperConfig.xml</b> 您可能会要MBG使用MapperConfigPlugin生成一个Mapper配置文件的骨架。
+查看<a href="configreference/plugin.html">&lt;插件&gt;</a>页面获取详细信息。</p>
+
+
+<h2>Updating the SqlMapConfig.xml File (iBATIS 2.x)</h2>
+<p>iBATIS 2 uses an XML file, commonly named <code>SqlMapConfig.xml</code>,
+to specify
+information for a database connection, a transaction management scheme, and SQL map XML
+files that will be used in an iBATIS session.  MBG cannot create this file for you
+because MBG knows nothing about your execution environment.  However, some of the
+items in this file relate directly to MBG generated items.  Please refer to
+the standard iBATIS data mapper developer guide for details about the different
+configuration options.</p>
+
+<p>MBG specific needs in the configuration file are as follows:</p>
+<ul>
+  <li>Statement namespaces must be enabled</li>
+  <li>MBG generated SQL Map XML files must be listed</li>
+</ul>
+
+<p>For example, suppose that MBG has generated an SQL Map XML file called
+<code>MyTable_SqlMap.xml</code>, and that the file has been placed in the
+<code>test.xml</code> package
+of your project.  The <code>SqlMapConfig.xml</code> file should have these entries:</p>
+<pre>
+  &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+  &lt;!DOCTYPE sqlMapConfig
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd"&gt;
+
+  &lt;sqlMapConfig&gt;
+    &lt;!-- Statement namespaces are required for MBG --&gt;
+    &lt;settings useStatementNamespaces="true" /&gt;
+
+    &lt;!-- Setup the transaction manager and data source that are
+         appropriate for your environment
+    --&gt;
+    &lt;transactionManager type="..."&gt;
+      &lt;dataSource type="..."&gt;
+      &lt;/dataSource&gt;
+    &lt;/transactionManager&gt;
+
+    &lt;!-- SQL Map XML files should be listed here --&gt;
+    &lt;sqlMap resource="test/xml/MyTable_SqlMap.xml" /&gt;
+
+  &lt;/sqlMapConfig&gt;
+</pre>
+
+<p>If there is more than one SQL Map XML file (as is quite common),
+then the files can be listed in any order with repeated <code>&lt;sqlMap&gt;</code>
+elements after the <code>&lt;transactionManager&gt;</code> element.</p>
+
+<p><b>Version 1.2 New Enhancement</b> With MBG version 1.2 and later, You may ask
+MBG to generate a skeleton SQL Map Configuration file with the SqlMapConfigPlugin.
+See the <a href="configreference/plugin.html">&lt;plugin&gt;</a>
+page for more information.</p>
+
+<h2>Updating the dao.xml File (iBATIS 2.x)</h2>
+<p><b>重要提示:</b> this step is only required if you generated DAOs for the
+deprecated iBATIS DAO framework (we suggest using Spring instead).</p>
+<p>The iBATIS DAO framework is configured by an xml file commonly called
+<code>dao.xml</code>.  The iBATIS DAO framework uses this file to control the
+database connection information for DAOs, and also to list the DAO implementation
+classes and DAO interfaces.  In this file you should specify the path to your
+<code>SqlMapConfig.xml</code> file, and all the MBG generated DAO interfaces
+and implementation classes.</p>
+<p>For example, suppose that MBG has generated a DAO interface called
+<code>MyTableDAO</code> and a implementation class called
+<code>MyTableDAOImpl</code>, and that the files have been placed in the
+<code>test.dao</code> package
+of your project.  The <code>dao.xml</code> file should have these entries:</p>
+
+
+<pre>
+  &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+  &lt;!DOCTYPE daoConfig
+   PUBLIC "-//ibatis.apache.org//DTD DAO Configuration 2.0//EN"
+   "http://ibatis.apache.org/dtd/dao-2.dtd"&gt;
+
+  &lt;daoConfig&gt;
+    &lt;context&gt;
+      &lt;transactionManager type="SQLMAP"&gt;
+        &lt;property name="SqlMapConfigResource"
+                  value="test/SqlMapConfig.xml"/&gt;
+      &lt;/transactionManager&gt;
+
+      &lt;!-- DAO interfaces and implementations should be listed here --&gt;
+      &lt;dao interface="test.dao.MyTableDAO"
+           implementation="test.dao.MyTableDAOImpl" /&gt;
+
+    &lt;/context&gt;
+  &lt;/daoConfig&gt;
+</pre>
+
+</body>
+</html>

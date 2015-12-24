@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>通过Maven运行 MyBatis Generator </title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>通过Maven运行 MyBatis Generator </h1>
+<p>MyBatis Generator  (MBG) 包含了一个可以集成到Maven构建的Maven插件，按照Maven的配置惯例,
+  将MBG集成到Maven很容易. 最简配置如下:</p>
+
+<pre>
+   &lt;project ...&gt;
+     ...
+     &lt;build&gt;
+       ...
+       &lt;plugins&gt;
+        ...
+        &lt;plugin&gt;
+      	  &lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;
+      	  &lt;artifactId&gt;mybatis-generator-maven-plugin&lt;/artifactId&gt;
+          &lt;version&gt;1.3.0&lt;/version&gt;
+        &lt;/plugin&gt;
+        ...
+      &lt;/plugins&gt;
+      ...
+    &lt;/build&gt;
+    ...
+  &lt;/project&gt;
+
+</pre>
+
+<p>当然，事情永远不会那么容易！ </p>
+
+<h2>Maven Goal and Execution（Maven 目标和执行）</h2>
+<p>The MBG Maven plugin 包含一个目标:</p>
+<ul>
+  <li><code>mybatis-generator:generate</code></li>
+</ul>
+<p>这个目标不会被Maven自动执行，他可以通过以下两种方式执行。</p>
+<p>可以在命令行通过以下命令执行:</p>
+<ul>
+  <li><code>mvn mybatis-generator:generate</code></li>
+</ul>
+<p>您可以通过标准的Maven命令属性传递参数，
+例如:</p>
+<ul>
+  <li><code>mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate</code></li>
+</ul>
+<p>这条命令会使MBG覆盖重名的文件</p>
+<p>在一个连续的编译环境中，您可能想让MGB作为Maven构建的一部分自动执行。
+这可以通过配置自动执行的目标来实现，这种情况的例子如下:</p>
+<pre>
+   &lt;project ...&gt;
+     ...
+     &lt;build&gt;
+       ...
+       &lt;plugins&gt;
+        ...
+        &lt;plugin&gt;
+      	  &lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;
+      	  &lt;artifactId&gt;mybatis-generator-maven-plugin&lt;/artifactId&gt;
+          &lt;version&gt;1.3.0&lt;/version&gt;
+          &lt;executions&gt;
+            &lt;execution&gt;
+              &lt;id&gt;Generate MyBatis Artifacts&lt;/id&gt;
+              &lt;goals&gt;
+                &lt;goal&gt;generate&lt;/goal&gt;
+              &lt;/goals&gt;
+            &lt;/execution&gt;
+          &lt;/executions&gt;
+        &lt;/plugin&gt;
+        ...
+      &lt;/plugins&gt;
+      ...
+    &lt;/build&gt;
+    ...
+  &lt;/project&gt;
+
+</pre>
+<p>MBG插件将会绑定到Maven构建的 <code>generate-sources</code> 阶段。
+所以他会在编译步骤之前执行。
+此外注意MBG目标将绑定生成Java和XML资源文件的建立，他们都将包括在生成的JAR包内。</p>
+
+<h2>MyBatis Generator  配置属性</h2>
+<p>所有配置在POM中的属性都可以传递到配置文件，并且可以用通常的方式使用。例如:</p>
+<pre>
+   &lt;project ...&gt;
+     ...
+     &lt;properties&gt;
+       &lt;dao.target.dir&gt;src/main/java&lt;/dao.target.dir&gt;
+     &lt;/properties&gt;
+     ...
+     &lt;build&gt;
+       ...
+       &lt;plugins&gt;
+        ...
+        &lt;plugin&gt;
+      	  &lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;
+      	  &lt;artifactId&gt;mybatis-generator-maven-plugin&lt;/artifactId&gt;
+          &lt;version&gt;1.3.0&lt;/version&gt;
+          &lt;executions&gt;
+            &lt;execution&gt;
+              &lt;id&gt;Generate MyBatis Artifacts&lt;/id&gt;
+              &lt;goals&gt;
+                &lt;goal&gt;generate&lt;/goal&gt;
+              &lt;/goals&gt;
+            &lt;/execution&gt;
+          &lt;/executions&gt;
+        &lt;/plugin&gt;
+        ...
+      &lt;/plugins&gt;
+      ...
+    &lt;/build&gt;
+    ...
+  &lt;/project&gt;
+
+</pre>
+<p>在这种情况下，属性可以在配置文件中被访问的语法是 <code>${dao.target.dir}</code>.</p>
+
+<h2>参考参数</h2>
+<p>所有的参数都是可选的，大部分都适合的默认值。</p>
+<table cellspacing="0" cellpadding="5" border="1">
+  <tr>
+    <th>参数</th>
+    <th>表达式</th>
+    <th>类型</th>
+    <th>注释</th>
+  </tr>
+  <tr>
+    <td valign="top">configurationFile</td>
+    <td valign="top">${mybatis.generator.configurationFile}</td>
+    <td valign="top">java.io.File</td>
+    <td valign="top">指定配置文件的名称。
+      <p>默认值:</p>
+      ${basedir}/src/main/resources/generatorConfig.xml
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">contexts</td>
+    <td valign="top">${mybatis.generator.contexts}</td>
+    <td valign="top">java.lang.String</td>
+    <td valign="top">如果指定了该参数，逗号隔开的这些context会被执行。
+      这些指定的context必须和配置文件中 &lt;context&gt; 元素的 <code>id</code> 属性一致。
+      只有指定的这些contextid会被激活执行。如果没有指定该参数，所有的context都会被激活执行。
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">jdbcDriver</td>
+    <td valign="top">${mybatis.generator.jdbcDriver}</td>
+    <td valign="top">java.lang.String</td>
+    <td valign="top">如果您指定了 <code>sqlScript</code> 参数,
+      当连接数据库时这里的值是JDBC驱动类的权限定名称。
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">jdbcPassword</td>
+    <td valign="top">${mybatis.generator.jdbcPassword}</td>
+    <td valign="top">java.lang.String</td>
+    <td valign="top">如果您指定了 <code>sqlScript</code> 参数, 这是连接数据库的密码。
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">jdbcURL</td>
+    <td valign="top">${mybatis.generator.jdbcURL}</td>
+    <td valign="top">java.lang.String</td>
+    <td valign="top">如果您指定了 <code>sqlScript</code> 参数, 这是连接数据库的JDBC URL
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">jdbcUserId</td>
+    <td valign="top">${mybatis.generator.jdbcUserId}</td>
+    <td valign="top">java.lang.String</td>
+    <td valign="top">如果您指定了 <code>sqlScript</code> 参数, 这里是连接数据库的用户id
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">outputDirectory</td>
+    <td valign="top">${mybatis.generator.outputDirectory}</td>
+    <td valign="top">java.io.File</td>
+    <td valign="top">将放置 MBG 所生成文件的目录。
+      这个目录是用于当 <code>targetProject</code> 在配置文件中设置特殊值的"MAVEN"时使用(大小写敏感)。
+      <p>默认值:</p>
+      ${project.build.directory}/generated-sources/mybatis-generator
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">overwrite</td>
+    <td valign="top">${mybatis.generator.overwrite}</td>
+    <td valign="top">boolean</td>
+    <td valign="top">如果指定了该参数，如果生成的java文件存在已经同名的文件，新生成的文件会覆盖原有的文件。
+      如果没有指定该参数，如果存在同名的文件，MBG会给新生成的代码文件生成一个唯一的名字(例如： MyClass.java.1, MyClass.java.2 等等)。
+      <b>重要: 生成器一定会自动合并或覆盖已经生成的XML文件。</b>
+      <p>默认值:</p>
+      false
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">sqlScript</td>
+    <td valign="top">${mybatis.generator.sqlScript}</td>
+    <td valign="top">java.lang.String</td>
+    <td valign="top">要在生成代码之前运行的 SQL 脚本文件的位置。
+     如果空，不会执行任何脚本。
+     如果不是空，<code>jdbcDriver</code>,
+     <code>jdbcURL</code> 参数必须提供。
+     另外如果连接数据库需要认证也需要提供 <code>jdbcUserId</code> 和 <code>jdbcPassword</code> 参数。
+     <p>值可以使一个文件系统的绝对路径或者是一个使用"classpath:"开头放在构建的类路径下的路径。</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">tableNames</td>
+    <td valign="top">${mybatis.generator.tableNames}</td>
+    <td valign="top">java.lang.String</td>
+    <td valign="top">如果指定了该参数，逗号隔开的这个表会被运行，
+      这些表名必须和 &lt;table&gt; 配置中的表面完全一致。只有指定的这些表会被执行。
+      如果没有指定该参数，所有的表都会被执行。
+      按如下方式指定表明: <br/><br/>
+      <code>table</code><br/>
+      <code>schema.table</code><br/>
+      <code>catalog..table</code><br/>
+      等等。
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">verbose</td>
+    <td valign="top">${mybatis.generator.verbose}</td>
+    <td valign="top">boolean</td>
+    <td valign="top">如果指定该参数，执行过程会输出到控制台。
+    </td>
+  </tr>
+</table>
+
+<h2>targetProject 解释</h2>
+<p>与Maven运行时 生成器 配置的 <code>targetProject</code> 属性有不同的解释。
+如果指定值为"MAVEN" (大小写敏感), <code>targetProject</code> 将被设置为插件的输出目录，而且如果不存在这个目录，将会创建这个目录。
+如果没有设置为 "MAVEN", 那么<code>targetProject</code> 将会被 MGB 当成普通的 - 它必须是一个已经存在的目录。</p>
+</body>
+</html>

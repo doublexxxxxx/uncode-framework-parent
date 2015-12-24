@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>从Ibator迁移</title>
+    <link rel="stylesheet" type="text/css" href="mbgstyle.css"></link>
+</head>
+<body dir="ltr">
+<h1>从Ibator迁移</h1>
+<p>此页面详细的MyBatis发生器（MBG）和Ibator之间变化。对于大多数用户来说，这些迁移应该很简单。你只需要自定义类，去扩展Ibator的类提供的代码生成器或Java类型解析，就可以实现。</p>
+<p>修改MBG 的XML配置文件。如果你使用基于Java的配置，只需要做一下小的修改，从的XML变化的描述可以看出来。</p>
+<p><b>重要提示：MBG</b>支持旧的Ibator配置文件，但是，新的特性将只在按照MBG DTD的配置文件来实现。</p>
+<h2>重大变化</h2>
+<ul>
+    <li>该DTD已经改变。新的DOCTYPE应该是<pre>&lt;！DOCTYPE generatorConfiguration PUBLIC“ -  // mybatis.org//DTD MyBatis的发电机配置1.0 // EN”“http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd”&gt;</pre>
+    </li>
+    <li>MyBatis3现在是默认的运行时。</li>
+    <li><code>&lt;ibatorConfiguration&gt;</code>元素被重命名为<code>&lt;generatorConfiguration&gt;</code></li>
+    <li><code>&lt;ibatorContext&gt;</code>元素被重命名为<code>&lt;context&gt;</code></li>
+    <li><code>&lt;ibatorPlugin&gt;</code>元素被重命名为<code>&lt;plugin&gt;</code></li>
+    <li><code>&lt;daoGenerator&gt;</code>元素被重命名为<code>&lt;javaClientGenerator&gt;</code></li>
+    <li>如果你实现了一个插件，该<code>daoXXX</code>方法已被重新命名为<code>clientXXX</code> 。</li>
+</ul>
+</body>
+</html>

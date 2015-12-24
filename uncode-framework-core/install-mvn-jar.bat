@@ -1,0 +1,1 @@
+mvn install:install-file -DgroupId=org.apache.velocity -DartifactId=velocity -Dversion=1.7 -Dpackaging=maven-plugin -Dfile=c:\velocity-1.7.jar

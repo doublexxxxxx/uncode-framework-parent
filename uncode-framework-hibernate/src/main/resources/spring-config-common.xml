@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="sqlContext" class="com.uncodeframework.core.common.orm.sql.SQLContextFactory" factory-method="createSQLContext">
+		<constructor-arg>
+			<value>classpath:sqls/sql.xml</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- spring工具类 方便在非spring管理环境中获取bean -->
+	<bean id="springUtils" class="com.uncodeframework.core.common.utils.SpringUtils" />
+
+</beans>

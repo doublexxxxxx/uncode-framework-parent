@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;commentGenerator&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;commentGenerator&gt; 元素</h1>
+<p>&lt;commentGenerator&gt; 元素用来定义注释生成器的属性。
+注释生成器用来给由 MyBatis Generator (MBG) 生成的多种元素（Java自动，Java方法，XML元素等等）生成注释。
+默认的注释生成器将 JavaDoc 注释添加到所有生成的Java元素上，从而使Eclipse插件可以使用合并Java的功能。
+此外，注释还会添加到每一个生成的XML元素。
+注释的目的还在于告诉用户这个元素是生成的，并且有可能重新生成（也就是说 - 他们不应该被修改）。
+这个元素是 <a href="context.html">&lt;context&gt;</a> 元素的一个可选的子元素。</p>
+
+<p>默认的实现类是 <code>org.mybatis.generator.internal.DefaultCommentGenerator</code>。
+如果您只想修改某些行为，默认的实现类专门为扩展进行设计。</p>
+
+<h2>必选属性</h2>
+<p>无</p>
+
+<h2>可选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">type</td>
+    <td>使用用户指定提供的注释生成器类型。
+      这个类必须继承<code>org.mybatis.generator.api.CommentGenerator</code>接口。
+      而且必须有一个默认的构造函数。
+      这个属性接收指定特殊的值 DEFAULT，这将会使用默认的实现类（这和不指定该属性的效果一样）。</td>
+  </tr>
+</table>
+
+<h2>子元素</h2>
+<ul>
+  <li><a href="property.html">&lt;property&gt;</a> (0..N)</li>
+</ul>
+
+<h2>支持的属性</h2>
+<p>这个表格列出了注释生成器中所有可以通过<a href="property.html">&lt;property&gt;</a>子元素进行设置的属性：</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性名</th>
+    <th>属性值</th>
+  </tr>
+  <tr>
+    <td valign="top">suppressAllComments</td>
+    <td>
+      这个属性用来指定MBG生成的代码中是否包含任何注释。
+      这个属性有以下可选值：
+      <table>
+        <tr>
+          <th valign="top">false</th>
+          <td><i>这是默认值</i>
+            <br/>当这个属性是false或者没有指定时，所有生成的元素都会包含用来说明这是生成元素的注释。
+          </td>
+        </tr>
+        <tr>
+          <th valign="top">true</th>
+          <td>当这个属性是true时，不会往生成的元素中添加任何注释。
+          </td>
+        </tr>
+      </table>
+     <p><b>警告: </b> 如果您将这个值设为true，那么所有的代码合并都会被禁用。</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">suppressDate</td>
+    <td>
+      这个元素用来指定生成的注释中是否包含生成的日期。
+      这个属性有以下可选值：
+      <table>
+        <tr>
+          <th valign="top">false</th>
+          <td><i>这是默认值</i>
+            <br/>当这个属性是false或者没有指定时，所有元素生成注释时都会带着生成时间。
+          </td>
+        </tr>
+        <tr>
+          <th valign="top">true</th>
+          <td>当这个属性是true时，注释中不会添加时间戳。
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<h2>示例</h2>
+<p>这个元素指定了我们不希望生成的注释中包含时间戳:</p>
+<pre>
+&lt;commentGenerator&gt;
+  &lt;property name="suppressDate" value="true" /&gt;
+&lt;/commentGenerator&gt;
+</pre>
+
+</body>
+</html>

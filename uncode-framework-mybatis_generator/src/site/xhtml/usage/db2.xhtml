@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>DB2 使用注意事项</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>DB2 使用注意事项</h1>
+<h2>LONG VARCHAR 字段</h2>
+<p>默认情况下MyBatis将LONG VARCHAR字段映射为<code>java.lang.String</code>类型,
+数据库字段映射为 <code>jdbcType="LONGVARCHAR"</code>。这样映射会导致DB2在检索数据时发生错误。DB2 的LONG VARCHAR字段应该被映射为
+<code>java.lang.String</code>类型，数据库类型应该是<code>jdbcType="VARCHAR"</code>。为了解决该问题, 使用<code>&lt;columnOverride&gt;</code>配置如下:</p>
+<pre>
+  &lt;table schema="DB2ADMIN" tableName="ALLTYPES" &gt;
+    &lt;columnOverride column="LONG_VARCHAR_FIELD" javaType="java.lang.String" jdbcType="VARCHAR" /&gt;
+  &lt;/table&gt;
+</pre>
+</body>
+</html>

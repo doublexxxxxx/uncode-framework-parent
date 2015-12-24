@@ -1,0 +1,88 @@
+[DEBUG] 2015-12-17  11:43:39.889 [main] org.apache.ibatis.logging.LogFactory - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG] 2015-12-17  11:45:15.731 [main] org.apache.ibatis.logging.LogFactory - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG] 2015-12-17  11:48:27.725 [main] org.apache.ibatis.logging.LogFactory - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG] 2015-12-17  11:49:37.619 [main] org.apache.ibatis.logging.LogFactory - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG] 2015-12-17  11:51:27.211 [main] org.apache.ibatis.logging.LogFactory - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG] 2015-12-17  11:51:27.311 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  11:51:27.633 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\EmployeeMapper.xml]'
+[DEBUG] 2015-12-17  11:51:27.678 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\EmployeeroleMapper.xml]'
+[DEBUG] 2015-12-17  11:51:27.765 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\MenuMapper.xml]'
+[DEBUG] 2015-12-17  11:51:27.816 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\MenuroleMapper.xml]'
+[DEBUG] 2015-12-17  11:51:27.873 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\RoleMapper.xml]'
+[DEBUG] 2015-12-17  11:51:27.929 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\SequenceMapper.xml]'
+[DEBUG] 2015-12-17  11:51:28.000 [main] org.mybatis.spring.SqlSessionUtils - Creating a new SqlSession
+[DEBUG] 2015-12-17  11:51:28.011 [main] org.mybatis.spring.SqlSessionUtils - SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@256c711] was not registered for synchronization because synchronization is not active
+[DEBUG] 2015-12-17  11:51:28.037 [main] org.mybatis.spring.SqlSessionUtils - Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@256c711]
+[DEBUG] 2015-12-17  11:53:17.063 [main] org.apache.ibatis.logging.LogFactory - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG] 2015-12-17  11:53:17.133 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  11:53:17.371 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\EmployeeMapper.xml]'
+[DEBUG] 2015-12-17  11:53:17.412 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\EmployeeroleMapper.xml]'
+[DEBUG] 2015-12-17  11:53:17.486 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\MenuMapper.xml]'
+[DEBUG] 2015-12-17  11:53:17.529 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\MenuroleMapper.xml]'
+[DEBUG] 2015-12-17  11:53:17.588 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\RoleMapper.xml]'
+[DEBUG] 2015-12-17  11:53:17.639 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\SequenceMapper.xml]'
+[DEBUG] 2015-12-17  11:53:17.704 [main] org.mybatis.spring.SqlSessionUtils - Creating a new SqlSession
+[DEBUG] 2015-12-17  11:53:17.712 [main] org.mybatis.spring.SqlSessionUtils - SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@11f70ae8] was not registered for synchronization because synchronization is not active
+[DEBUG] 2015-12-17  11:53:18.065 [main] org.mybatis.spring.transaction.SpringManagedTransaction - JDBC Connection [jdbc:mysql://localhost:3306/uncode4wms, UserName=wmsdb@localhost, MySQL Connector Java] will not be managed by Spring
+[DEBUG] 2015-12-17  11:53:18.076 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectByPrimaryKey - ==>  Preparing: select ID, EmployeeENL, EmployeeName, EmployeeNameLL, Email, Status, MobilePhone, SupervisorENL, Position, TelPhone from employee where ID = ? 
+[DEBUG] 2015-12-17  11:53:18.135 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectByPrimaryKey - ==> Parameters: 10000(String)
+[DEBUG] 2015-12-17  11:53:18.194 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectByPrimaryKey - <==      Total: 1
+[DEBUG] 2015-12-17  11:53:18.195 [main] org.mybatis.spring.SqlSessionUtils - Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@11f70ae8]
+[INFO ] 2015-12-17  11:53:18.441 [main] test.TestMyBatis - {"employeeenl":"UNCODE","employeename":"Xie Xiao","employeenamell":"谢晓","id":"10000","status":"1"}
+[DEBUG] 2015-12-17  11:54:31.139 [main] org.apache.ibatis.logging.LogFactory - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG] 2015-12-17  11:54:31.209 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  11:54:31.438 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\EmployeeMapper.xml]'
+[DEBUG] 2015-12-17  11:54:31.485 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\EmployeeroleMapper.xml]'
+[DEBUG] 2015-12-17  11:54:31.560 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\MenuMapper.xml]'
+[DEBUG] 2015-12-17  11:54:31.609 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\MenuroleMapper.xml]'
+[DEBUG] 2015-12-17  11:54:31.662 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\RoleMapper.xml]'
+[DEBUG] 2015-12-17  11:54:31.720 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\SequenceMapper.xml]'
+[DEBUG] 2015-12-17  11:54:31.786 [main] org.mybatis.spring.SqlSessionUtils - Creating a new SqlSession
+[DEBUG] 2015-12-17  11:54:31.795 [main] org.mybatis.spring.SqlSessionUtils - SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3603e470] was not registered for synchronization because synchronization is not active
+[DEBUG] 2015-12-17  11:54:32.054 [main] org.mybatis.spring.transaction.SpringManagedTransaction - JDBC Connection [jdbc:mysql://localhost:3306/uncode4wms, UserName=wmsdb@localhost, MySQL Connector Java] will not be managed by Spring
+[DEBUG] 2015-12-17  11:54:32.067 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectByPrimaryKey - ==>  Preparing: select ID, EmployeeENL, EmployeeName, EmployeeNameLL, Email, Status, MobilePhone, SupervisorENL, Position, TelPhone from employee where ID = ? 
+[DEBUG] 2015-12-17  11:54:32.109 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectByPrimaryKey - ==> Parameters: 10000(String)
+[DEBUG] 2015-12-17  11:54:32.146 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectByPrimaryKey - <==      Total: 1
+[DEBUG] 2015-12-17  11:54:32.147 [main] org.mybatis.spring.SqlSessionUtils - Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3603e470]
+[INFO ] 2015-12-17  11:54:32.318 [main] test.TestMyBatis - {"employeeenl":"UNCODE","employeename":"Xie Xiao","employeenamell":"谢晓","id":"10000","status":"1"}
+[DEBUG] 2015-12-17  14:49:24.233 [main] org.apache.ibatis.logging.LogFactory - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG] 2015-12-17  14:49:25.185 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:25.333 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:25.346 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:25.358 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:25.371 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:25.386 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:28.833 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:28.846 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:28.862 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:28.875 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:28.901 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:49:28.917 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:51:11.779 [main] org.apache.ibatis.logging.LogFactory - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG] 2015-12-17  14:51:12.682 [main] org.mybatis.spring.SqlSessionFactoryBean - Property 'configLocation' not specified, using default MyBatis Configuration
+[DEBUG] 2015-12-17  14:51:13.074 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\EmployeeMapper.xml]'
+[DEBUG] 2015-12-17  14:51:13.128 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\EmployeeroleMapper.xml]'
+[DEBUG] 2015-12-17  14:51:13.254 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\MenuMapper.xml]'
+[DEBUG] 2015-12-17  14:51:13.327 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\MenuroleMapper.xml]'
+[DEBUG] 2015-12-17  14:51:13.412 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\RoleMapper.xml]'
+[DEBUG] 2015-12-17  14:51:13.484 [main] org.mybatis.spring.SqlSessionFactoryBean - Parsed mapper file: 'file [C:\MMM\PROJECT\UNCODESPACES\uncode-framework-parent\uncode-framework-wms\target\classes\mappers\SequenceMapper.xml]'
+[DEBUG] 2015-12-17  14:51:13.701 [main] org.mybatis.spring.SqlSessionUtils - Creating a new SqlSession
+[DEBUG] 2015-12-17  14:51:13.713 [main] org.mybatis.spring.SqlSessionUtils - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7aacaaae]
+[DEBUG] 2015-12-17  14:51:14.078 [main] org.mybatis.spring.transaction.SpringManagedTransaction - JDBC Connection [com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl@39f86091] will be managed by Spring
+[DEBUG] 2015-12-17  14:51:14.089 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectByPrimaryKey - ==>  Preparing: select ID, EmployeeENL, EmployeeName, EmployeeNameLL, Email, Status, MobilePhone, SupervisorENL, Position, TelPhone from employee where ID = ? 
+[DEBUG] 2015-12-17  14:51:14.318 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectByPrimaryKey - ==> Parameters: 10000(String)
+[DEBUG] 2015-12-17  14:51:14.373 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectByPrimaryKey - <==      Total: 1
+[DEBUG] 2015-12-17  14:51:14.374 [main] org.mybatis.spring.SqlSessionUtils - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7aacaaae]
+[DEBUG] 2015-12-17  14:51:14.375 [main] org.mybatis.spring.SqlSessionUtils - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7aacaaae]
+[DEBUG] 2015-12-17  14:51:14.376 [main] org.mybatis.spring.SqlSessionUtils - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7aacaaae]
+[INFO ] 2015-12-17  14:51:14.592 [main] test.TestMyBatis - {"employeeenl":"UNCODE","employeename":"Xie Xiao","employeenamell":"谢晓","id":"10000","status":"1"}
+[DEBUG] 2015-12-17  14:51:14.599 [main] org.mybatis.spring.SqlSessionUtils - Creating a new SqlSession
+[DEBUG] 2015-12-17  14:51:14.599 [main] org.mybatis.spring.SqlSessionUtils - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ff86671]
+[DEBUG] 2015-12-17  14:51:14.600 [main] org.mybatis.spring.transaction.SpringManagedTransaction - JDBC Connection [com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl@39f86091] will be managed by Spring
+[DEBUG] 2015-12-17  14:51:14.600 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectAll - ==>  Preparing: select ID, EmployeeENL, EmployeeName, EmployeeNameLL, Email, Status, MobilePhone, SupervisorENL, Position, TelPhone from employee 
+[DEBUG] 2015-12-17  14:51:14.601 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectAll - ==> Parameters: 
+[DEBUG] 2015-12-17  14:51:14.605 [main] com.uncodeframework.wms.mapper.EmployeeMapper.selectAll - <==      Total: 1
+[DEBUG] 2015-12-17  14:51:14.606 [main] org.mybatis.spring.SqlSessionUtils - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ff86671]
+[DEBUG] 2015-12-17  14:51:14.607 [main] org.mybatis.spring.SqlSessionUtils - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ff86671]
+[DEBUG] 2015-12-17  14:51:14.607 [main] org.mybatis.spring.SqlSessionUtils - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ff86671]
+[INFO ] 2015-12-17  14:51:14.610 [main] test.TestMyBatis - [{"employeeenl":"UNCODE","employeename":"Xie Xiao","employeenamell":"谢晓","id":"10000","status":"1"}]

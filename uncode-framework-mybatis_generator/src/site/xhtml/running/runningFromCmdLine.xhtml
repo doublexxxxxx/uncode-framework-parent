@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>从命令行运行 MyBatis Generator </title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>从命令行运行 MyBatis Generator </h1>
+<p>MyBatis Generator  (MBG) 可以直接从命令行运行。JAR清单包括默认类的名称 (<code>org.mybatis.generator.api.ShellRunner</code>)
+  或者您可以自己指定它。 <code>ShellRunner</code> 类接受以下的几种详细参数:</p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+  <th>参数</th>
+  <th>值</th>
+</tr>
+<tr>
+  <td>-configfile <i>file_name</i> <br/>(必须的)</td>
+  <td>指定配置文件的名称。</td>
+</tr>
+<tr>
+  <td>-overwrite (可选的)</td>
+  <td>如果指定了该参数，如果生成的java文件存在已经同名的文件，新生成的文件会覆盖原有的文件。
+    如果没有指定该参数，如果存在同名的文件，MBG会给新生成的代码文件生成一个唯一的名字(例如： MyClass.java.1, MyClass.java.2 等等)。
+      <b>重要: 生成器一定会自动合并或覆盖已经生成的XML文件。</b></td>
+</tr>
+<tr>
+  <td>-verbose (可选的)</td>
+  <td>如果指定该参数，执行过程会输出到控制台。</td>
+</tr>
+<tr>
+  <td>-forceJavaLogging (可选的)</td>
+  <td>如果指定该参数，MBG将会使用JAVA日志记录而不会使用Log4J,即使Log4J在运行时的类路径中。</td>
+</tr>
+<tr>
+  <td>-contextids <i>context1,context2,...</i><br/>(可选的)</td>
+  <td>如果指定了该参数，逗号隔开的这些context会被执行。
+    这些指定的context必须和配置文件中 &lt;context&gt; 元素的 <code>id</code> 属性一致。
+    只有指定的这些contextid会被激活执行。如果没有指定该参数，所有的context都会被激活执行。</td>
+</tr>
+<tr>
+  <td>-tables <i>table1, table2,...</i><br/>(可选的)</td>
+  <td>如果指定了该参数，逗号隔开的这个表会被运行，
+    这些表名必须和 &lt;table&gt; 配置中的表面完全一致。只有指定的这些表会被执行。
+    如果没有指定该参数，所有的表都会被执行。
+      按如下方式指定表明: <br/><br/>
+      <code>table</code><br/>
+      <code>schema.table</code><br/>
+      <code>catalog..table</code><br/>
+      等等。</td>
+</tr>
+</table>
+
+<p>从命令行运行MGB时您必须指定 XML 配置文件。如果文件的名字是"generatorConfig.xml",可以用下面任意的命令执行:</p>
+<pre>
+   java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml
+   java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml -overwrite
+   java -cp mybatis-generator-core-x.x.x.jar org.mybatis.generator.api.ShellRunner -configfile generatorConfig.xml
+   java -cp mybatis-generator-core-x.x.x.jar org.mybatis.generator.api.ShellRunner -configfile generatorConfig.xml -overwrite
+</pre>
+</body>
+</html>

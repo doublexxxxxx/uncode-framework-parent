@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.uncode.framework</groupId>
+	<artifactId>uncode-framework-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>UNCODE-FRAMEWORK</name>
+	<description>this is hodgepodge framework</description>
+
+	<properties>
+		<!-- project encoding -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.7</jdk.version>
+		<support.basedir>${project.parent.basedir}/src/support</support.basedir>
+		<site.basedir>${project.parent.basedir}</site.basedir>
+	</properties>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<modules>
+		<module>?</module>
+		<module>uncode-framework-email</module>
+		<module>uncode-framework-test</module>
+		<module>uncode-framework-common</module>
+		<module>uncode-framework-easyxls</module>
+		<module>uncode-framework-ws</module>
+		<module>uncode-framework-log4j</module>
+		<module>uncode-framework-mylog</module>
+		<module>uncode-framework-cluster2cloud</module>
+		<module>uncode-framework-cluster_cloud</module>
+		<module>uncode-framework-freemarker</module>
+		<module>uncode-framework-bootstrap</module>
+		<module>uncode-framework-hibernate</module>
+		<module>uncode-framework-mybatis_generator</module>
+		<module>uncode-framework-mybatis_spring3</module>
+		<module>uncode-framework-mybatis_spring4</module>
+    <module>uncode-framework-core</module>
+    <module>uncode-framework-velocity</module>
+    <module>uncode-framework-wms</module>
+    <module>uncode-framework-logback</module>
+    <module>uncode-framework-extjs3</module>
+  </modules>
+</project>

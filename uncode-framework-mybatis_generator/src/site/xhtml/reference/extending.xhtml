@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>扩展MyBatis Generator</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css"></link>
+</head>
+<body>
+<h1>扩展MyBatis Generator</h1>
+<p>MyBatis Generator（MBG）是专为扩展性设计的。所有的代码生成使用Java和XML元素简单的DOM表示执行。</p>
+<p>Java的DOM包含在<code>org.mybatis.generator.api.dom.java</code>包</p>
+<p>该XML DOM包含在<code>org.mybatis.generator.api.dom.xml</code>包</p>
+<p>这些类不足以实现每个可以想象到的代码生成的可能性，但是用于生成简单到中等复杂Java和XML代码相当有用的。</p>
+
+<p>在配置文件中使用的选项，您可以提供自己的许多关键代码生成接口的实现。您也可以继承任何提供的实现来提供定制的行为。这个页面将介绍可用的公共API，并提供进一步调查源代码的指示。如果您对如何扩展MBG有任何的困难，您可以在支持的邮件列表<a href="mailto:mybatis-user@googlegroups.com">mybatis-user@googlegroups.com</a> 发送信息。</p>
+
+<h2>扩展与插入</h2>
+<p>虽然本网页上显示了许多不同的扩展点，在大多数情况下，这将是很容易通过使用插件扩展MBG。查阅<a href="pluggingIn.html">开发插件</a>的参考页面了解更多信息。</p>
+<p>代码生成的主要扩展点是<code>org.mybatis.generator.api.IntrospectedTable</code> 。实现一个代码生成器是一个有意义的任务，只有当您想要完全取代MBG的代码生成活动时才考虑。自从Abator的原始版本以来，很少出现有增强请求无法通过一个插件来处理的。</p>
+
+<h2>扩展点</h2>
+<p>MBG提供了许多不同的扩展点。以下部分列出扩展MBG的不同方法，并描述了可以实现与不同的扩展活动的类型。如果您需要一些了解不同的选择的帮助，您可以自由的在用户邮件列表上询问问题。</p>
+
+<h3>org.mybatis.generator.api.IntrospectedTable</h3>
+<p><code>IntrospectedTable</code>是一个可以扩展用于提供和MBG供给的版本不同的代码生成的抽象类。这种实现的一个很好的例子是基于一个FreeMarker的或Velocity模板的实现。在大多数其他情况下，编写插件是一个更好途径。</p>
+<p>如果您选择扩展这个类，您必须提供代码来生成Java和XML文件。您可以选择生成的这些文件的技术。<code>IntrospectedTable</code>基础类持有的一个<code>org.mybatis.generator.internal.rules.Rules</code>实例可查询许多用于代码生成的规则。</p>
+<p>MBG提供反射表的几种实现。实现基于<code>&lt;context&gt;</code>元素的<code>targetRuntime</code>属性值。在大多数情况下，继承下面的一个内置的扩展比从头开始创建一个实现会容易很多。下表显示了内置的实现：</p>
+<table cellspacing="0" cellpadding="5" border="1">
+  <tr>
+    <th>TargetRuntime</th>
+    <th>实现</th>
+  </tr>
+  <tr>
+    <td>MyBatis3（默认）</td>
+    <td><code>org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl</code></td>
+  </tr>
+  <tr>
+    <td>Ibatis2Java2</td>
+    <td><code>org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java2Impl</code></td>
+  </tr>
+  <tr>
+    <td>Ibatis2Java5</td>
+    <td><code>org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java5Impl</code></td>
+  </tr>
+</table>
+
+<p>如果您选择实现此扩展点，指定<code>&lt;context&gt;</code>元素的<code>targetRuntime</code>属性为您的实现类的完全限定类名。</p>
+
+<h3>org.mybatis.generator.api.IntrospectedColumn</h3>
+<p><code>IntrospectedColumn</code>是一个包含列的信息的类，因为它是一个从数据库返回的元数据类。在某些罕见的情况下，可能需要重写这个类来提供自己的 - 特别是如果您创建了一套新的代码生成器。</p>
+<p>如果您选择实施此扩展点，指定<code>&lt;context&gt;</code>元素的<code>introspectedColumnImpl</code>属性为您实现类的完全限定类名。</p>
+
+<h3>org.mybatis.generator.api.JavaTypeResolver</h3>
+<p>MBG在内省数据库时调用这个接口的方法将JDBC类型映射到Java类型。这个接口的默认实现<code>org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl</code> 。您可以提供自己的实现，并且默认的实现已被设计为可扩展。</p>
+
+<p>提供您自己的实现，在XML配置中指定全限定的类名：</p>
+<pre>
+    &lt;javaTypeResolver type="mypackage.MyImplementation“&gt; ...&lt;/ javaTypeResolver&gt;</pre>
+
+<h3>org.mybatis.generator.api.ShellCallback</h3>
+<p>MBG调用这个接口的方法来执行功能，它不能自己做。最重要的功能是：</p>
+<ul>
+  <li>翻译 项​​目/包 到一个目录结构</li>
+   <li>合并事件中的Java源文件同名的现有的Java文件/程序包是否存在。</li>
+</ul>
+
+<p>这个接口的默认实现<code>org.mybatis.generator.internal.DefaultShellCallback</code> 。默认实现简单的将项目和包连接在一起，如果需要则创建必要的包目录。默认的实现不支持Java文件的合并，并将覆盖或忽略文件。</p>
+
+<p>您可以提供自己的实现。如果您想将MBG集成到一些其他的环境中，这将是最重要的一个需要编写的类。例如，Eclipse插件提供的实现在Eclipse环境中运行时，它支持Java文件的合并。</p>
+
+<p>提供您自己的实现，提供有关构造函数的接口<code>org.mybatis.generator.api.MyBatisGenerator</code>的实例对象。这个不能通过XML来配置。如果您提供自己的实现此接口的话，我们假设您也提供了一些附加的代码（如一个新的Ant任务）来运行您的实现。</p>
+
+<h3>org.mybatis.generator.api.ProgressCallback</h3>
+<p>MBG调用这个接口的方法在文件的生成（长时间运行的进程）中报告进度。这个接口的默认实现<code>org.mybatis.generator.internal.NullProgressCallback</code>它只是忽略所有的进度消息。您可以提供此接口的实现，支持进度通知和取消代码生成。</p>
+
+<p>当集成MBG到其他IDE环境中实现此接口将是重要的。Eclipse的插件提供此接口挂接到Eclipse的进度通知系统的实现。</p>
+
+<p>提供您自己的实现，在<code>org.mybatis.generator.api.MyBatisGenerator.generate()</code>的一个方法调用上提供其中一个接口的实例。这个不能通过XML来配置。同样，我们假设，如果您提供自己的实现此接口，那么您也提供了一些附加代码（如新的Ant任务或IDE集成）来运行您的实现。</p>
+</body>
+</html>

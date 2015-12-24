@@ -1,0 +1,4 @@
+[ERROR] 2015-12-17  09:55:52.768 [main] org.uncodeframework.core.logback.App - this logback error message!
+[ERROR] 2015-12-17  09:57:56.033 [main] org.uncodeframework.core.logback.App - this logback error message!
+[ERROR] 2015-12-17  10:03:21.499 [main] org.uncodeframework.core.logback.App - this logback error message!
+[ERROR] 2015-12-17  10:03:21.500 [main] TestLogger - this logback testLogger error message!

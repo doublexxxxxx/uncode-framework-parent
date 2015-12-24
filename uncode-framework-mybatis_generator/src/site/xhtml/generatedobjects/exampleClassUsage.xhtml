@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Example类使用说明</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>Example类使用说明</h1>
+<p>Example类指定如何构建一个动态的where子句.  表中的每个non-BLOB列可以被包括在where子句中.  例子是展示此类用法的最好方式.</p>
+<p>Example类可以用来生成一个几乎无限的where子句.</p>
+<p>Example类包含一个内部静态类 <code>Criteria</code>
+包含一个用 <code>anded</code> 组合在where子句中的条件列表.  Example类包含一个 <code>List&lt;Criteria&gt;</code> 属性,所有内部类Criteria中的子句会用 <code>ored</code>组合在一起.  使用不同属性的
+<code>Criteria</code> 类允许您生成无限类型的where子句.</p>
+<p>创建 <code>Criteria</code> 对象 可以使用Example类中的 <code>createCriteria()</code> 
+或者 <code>or()</code> .  如果 <code>Criteria</code> 对象是用
+<code>createCriteria()</code> 创建的，它会自动为 <code>List&lt;Criteria&gt;</code> 属性添加一个 <code>Criteria</code> 对象 - 这使得它更容易写一个简单的where子句， 如果您不需要 <code>or</code> 或者其他几个子句组合的话.
+用 <code>or(Criteria criteria)</code> 方法创建 <code>Criteria</code> 对象, 方法里的 <code>criteria</code> 对象会被添加进 <code>Criteria</code> 对象的列表中.</p>
+
+<p><b>重要</b> 我们推荐您只使用 <code>or()</code> 方法创建 <code>Criteria</code> 对象.  我们相信这种方法使代码更有可读性.</p>
+
+<h2>简单查询</h2>
+<p>这个例子展示了如何用生成后的Example类去生成一个简单的where子句:</p>
+
+<pre>
+  TestTableExample example = new TestTableExample();
+
+  example.createCriteria().andField1EqualTo(5);
+</pre>
+
+<p>作为另一种选择, 下面的方式也是可以的:</p>
+<pre>
+  TestTableExample example = new TestTableExample();
+
+  example.or().andField1EqualTo(5);
+</pre>
+
+<p>在上面的例子中, 动态生成的where子句是:</p>
+<pre>
+  where field1 = 5
+</pre>
+
+<h2>复杂查询</h2>
+<p>下面的例子展示了如何用生成后的Example类去生成一个复杂的where子句 (用到了 JSE 5.0 的泛型):</p>
+<pre>
+  TestTableExample example = new TestTableExample();
+
+  example.or()
+    .andField1EqualTo(5)
+    .andField2IsNull();
+
+  example.or()
+    .andField3NotEqualTo(9)
+    .andField4IsNotNull();
+
+  List&lt;Integer&gt; field5Values = new ArrayList&lt;Integer&gt;();
+  field5Values.add(8);
+  field5Values.add(11);
+  field5Values.add(14);
+  field5Values.add(22);
+
+  example.or()
+    .andField5In(field5Values);
+
+  example.or()
+    .andField6Between(3, 7);
+
+</pre>
+<p>在上面的例子中, 动态生成的where子句是:</p>
+<pre>
+  where (field1 = 5 and field2 is null)
+     or (field3 &lt;&gt; 9 and field4 is not null)
+     or (field5 in (8, 11, 14, 22))
+     or (field6 between 3 and 7)
+</pre>
+<p>将会返回满足这些条件的记录结果.</p>
+
+<h2>去重复查询</h2>
+<p>您可以在所有的Example类中调用 <code>setDistinct(true)</code>
+方法进行强制去重复查询.</p>
+
+<h2>Criteria类</h2>
+<p> <code>Criteria</code> 内部类的每个属性都包含 <code>andXXX</code> 方法，以及如下的标准的SQL查询方法:</p>
+<ul>
+  <li>IS NULL - 指相关的列必须为NULL</li>
+  <li>IS NOT NULL - 指相关的列必须不为NULL</li>
+  <li>= (equal) - 指相关的列必须等于方法参数中的值</li>
+  <li>&lt;&gt; (not equal) - 指相关的列必须不等于方法参数中的值</li>
+  <li>&gt; (greater than) - 指相关的列必须大于方法参数中的值</li>
+  <li>&gt;= (greater than or equal) - 指相关的列必须大于等于方法参数中的值</li>
+  <li>&lt; (less than) - 指相关的列必须小于于方法参数中的值</li>
+  <li>&lt;= (less than or equal) - 指相关的列必须小于等于方法参数中的值</li>
+  <li>LIKE - 指相关的列必须 "like" 方法参数中的值.
+    这个方法不用必须加入 '%', 您必须设置方法参数中的值.
+  </li>
+  <li>NOT LIKE - 指相关的列必须 "not like"  方法参数中的值.
+    这个方法不用必须加入 '%', 您必须设置方法参数中的值.
+  </li>
+  <li>BETWEEN - 指相关的列必须在 "between" 方法参数中的两个值之间.</li>
+  <li>NOT BETWEEN - 指相关的列必须不在 "not between" 方法参数中的两个值之间.</li>
+  <li>IN - 指相关的列必须在传入的方法参数的list中.</li>
+  <li>NOT IN - 指相关的列必须不在传入的方法参数的list中.</li>
+</ul>
+
+
+</body>
+</html>

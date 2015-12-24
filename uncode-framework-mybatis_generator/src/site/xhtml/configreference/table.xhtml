@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;table&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;table&gt; 元素</h1>
+<p>&lt;table&gt; 元素用来从内省数据库中选择一个表。选定的表会生成如下的这些对象：</p>
+<ul>
+  <li>一个 MyBatis/iBATIS 格式的SQL映射文件</li>
+  <li>一组根据表生成的"model"类:
+    <ul>
+      <li>一个和表的主键匹配的类(如果表有主键)。</li>
+      <li>一个包含了非主键字段和BLOB字段的类，如果存在主键类，这个类就会继承主键类。</li>
+      <li>如果表中包含BLOB字段，就会有一个包含了BLOB字段的类。这个类会根据表的配置继承上面的一个或两个类。</li>
+      <li>一个用于不同的"by example"方法(selectByExample, deleteByExample)生成动态查询条件的类。</li>
+    </ul>
+  </li>
+  <li>(可选) 一个DAO接口或者类</li>
+</ul>
+<p>这个元素是<a href="context.html">&lt;context&gt;</a>元素的一个至少存在一个的必选子元素。
+ 您可以指定不限制数量的table元素。</p>
+
+<h2>数据库标识符</h2>
+<p>MyBatis Generator (MBG) 试图自动处理数据库标识符的大小写敏感性。
+在大多数情况下，无论您是否设置<code>catalog</code>, <code>schema</code> 和 <code>tableName</code> 属性，MBG都能找到表。
+MBG的处理过程遵循以下步骤：</p>
+<ol>
+  <li>如果 <code>catalog</code>, <code>schema</code> 或
+      <code>tableName</code> 属性包含空格，MBG将会根据指定的精确的情况查找。
+      在这种（包含空格）情况下，MBG将会自动分割生成SQL中表的标识符。</li>
+  <li>如果数据库记录是以大写形式存储的标识符，MGB会自动将任何表的标识符转换为大写。</li>
+  <li>如果数据库记录是以小写形式存储的标识符，MGB会自动将任何表的标识符转换为小写。</li>
+  <li>其他情况，MBG根据指定的精确的情况查找。</li>
+</ol>
+<p>在大多数情况下，这种处理很完美。然而，在某些情况下它会失败。
+例如，假设您创建了这样的一个表：</p>
+<pre>
+  create table "myTable" (
+     ...some columns
+  )
+</pre>
+
+<p>因为表名可以用分隔符，即使数据库把标识符存储为大写，大部分的数据库会根据精确指定的表名来生成表。
+在（上面）这种情况下，您需要在表的配置中指定<code>delimitIdentifiers="true"</code>。</p>
+
+<h2>必选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">tableName</td>
+    <td>数据库表的名称(不包括schema或catalog)。如果需要，指定的值可以包含SQL通配符。
+    </td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">schema</td>
+    <td>数据库 schema - 如果您的数据库不使用 schema ，或者有一个默认的 schema 您不需要设置 schema。
+      如果需要，指定的值可以包含SQL通配符。
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">catalog</td>
+    <td>数据库 catalog - 如果您的数据库不使用 catalog，或者有一个默认的 catalog，您就不需要设置 catalog。</td>
+  </tr>
+  <tr>
+    <td valign="top">alias</td>
+    <td>如果指定，这个值会用在生成的select查询SQL的表的别名和列名上。
+        列名会被别名为 alias_actualColumnName(别名_实际列名) 这种模式。</td>
+  </tr>
+  <tr>
+    <td valign="top">domainObjectName</td>
+    <td>生成对象的基本名称。如果没有指定，MBG会自动根据表名来生成名称。
+	    这个（指定或者自动生成的）名字将用于计算实体类的名称和DAO类的名称。
+        <p>您可以在实体对象的名字上指定包名分割。
+		例如，您可以指定<code>foo.Bar</code>，然后实体对象的名字会是
+		<code>Bar</code>，包名<code>foo</code>会添加到生成器配置中指定的目标包后面。</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">enableInsert</td>
+    <td>指定是否生成Insert语句。
+    <p>默认值是 <i>true</i>。</p></td>
+  </tr>
+  <tr>
+    <td valign="top">enableSelectByPrimaryKey</td>
+    <td>指定是否生成通过主键查询的语句。
+	    无论这个怎么设置，当表不存在主键的时候，不会生成这个语句。
+        <p>默认值是 <i>true</i>。</p></td>
+  </tr>
+  <tr>
+    <td valign="top">enableSelectByExample</td>
+    <td>指定是否生成通过Example查询的语句。
+	    这个语句支持运行时生成多种不同条件的动态查询。
+        <p>默认值是 <i>true</i>。</p></td>
+  </tr>
+  <tr>
+    <td valign="top">enableUpdateByPrimaryKey</td>
+    <td>指定是否生成通过主键更新的语句。
+	    无论这个怎么设置，当表不存在主键的时候，不会生成这个语句。
+        <p>默认值是 <i>true</i>。</p></td>
+  </tr>
+  <tr>
+    <td valign="top">enableDeleteByPrimaryKey</td>
+    <td>指定是否生成通过主键删除的语句。
+        无论这个怎么设置，当表不存在主键的时候，不会生成这个语句。
+        <p>默认值是 <i>true</i>。</p></td>
+  </tr>
+  <tr>
+    <td valign="top">enableDeleteByExample</td>
+    <td>指定是否生成通过Example删除的语句。
+	    这个语句支持运行时生成多种不同的条件动态删除。
+        <p>默认值是 <i>true</i>。</p></td>
+  </tr>
+  <tr>
+    <td valign="top">enableCountByExample</td>
+    <td>指定是否生成通过Example查询总数的语句。
+	    这个语句将返回满足Example条件的数据总数。
+        <p>默认值是 <i>true</i>。</p></td>
+  </tr>
+  <tr>
+    <td valign="top">enableUpdateByExample</td>
+    <td>指定是否生成通过Example更新的语句。
+	    这个语句将更新满足Example条件的数据。
+		如果设置为True,UpdateByExampleSelective语句也会生成。
+		这个语句只会更新那些参数中值不为null的的列。
+        <p>默认值是 <i>true</i>。</p></td>
+  </tr>
+  <tr>
+    <td valign="top">selectByPrimaryKeyQueryId</td>
+    <td>这个值会以"'&lt;value&gt;' as QUERYID"这种形式被添加到通过主键查询的语句的select列中。
+	    这可能对在运行时的DBA跟踪工具中标记查询有用。
+		如果您使用这个值，您需要为MBG生成的每一个查询指定一个唯一的id。</td>
+  </tr>
+  <tr>
+    <td valign="top">selectByExampleQueryId</td>
+    <td>这个值会以"'&lt;value&gt;' as QUERYID"这种形式被添加到通过Example查询的语句的select列中。
+	    这可能对在运行时的DBA跟踪工具中标记查询有用。
+		如果您使用这个值，您需要为MBG生成的每一个查询指定一个唯一的id。</td>
+  </tr>
+  <tr>
+    <td valign="top">modelType</td>
+    <td>如果您需要，这个值可以用来重写默认的模型类型。
+	  如果没有指定，MBG将会生成基于上下文默认模型类型的实体对象。
+	  模型类型定义了MBG如何生成实体类。
+	  有一些模型类型MGB会为每个表生成一个单独的实体类。
+	  另外一些模型，MGB会根据表结构生成不同的一些类。
+	  这个属性有以下可选值：
+      <table>
+        <tr>
+          <th valign="top">conditional</th>
+          <td>这个模型和hierarchical类似，除了如果那个单独的类将只包含一个字段，将不会生成一个单独的类。
+            因此,如果一个表的主键只有一个字段,那么不会为该字段生成单独的实体类,会将该字段合并到基本实体类中。</td>
+        </tr>
+        <tr>
+          <th valign="top">flat</th>
+          <td>该模型为每一张表只生成一个实体类。这个实体类包含表中的所有字段。</td>
+        </tr>
+        <tr>
+          <th valign="top">hierarchical</th>
+          <td>如果表有主键,那么该模型会产生一个单独的主键实体类,如果表还有BLOB字段，
+            则会为表生成一个包含所有BLOB字段的单独的实体类,然后为所有其他的字段生成一个单独的实体类。
+            MBG会在所有生成的实体类之间维护一个继承关系（注：BLOB类 继承 其他字段类 继承 主键类）。</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">escapeWildcards</td>
+    <td>这个属性表示当查询列，是否对schema和表名中的SQL通配符 ('_' and '%') 进行转义。
+	    对于某些驱动当schema或表名中包含SQL通配符时（例如，一个表名是MY_TABLE，有一些驱动需要将下划线进行转义）是必须的。
+        <p>默认值是 <i>false</i>.</p></td>
+  </tr>
+  <tr>
+    <td valign="top">delimitIdentifiers</td>
+    <td>这个属性表示当查询表并且在生成的SQL中分隔标识符时，是否使用指定的确切的值。
+		有关更多详细信息，请参见上面的详述。
+        <p>分隔符在
+        <a href="context.html">&lt;context&gt;</a> 元素上指定。</p>
+        <p>默认值是 <i>false</i>。除非 <code>catalog</code>,
+        <code>schema</code> 或 <code>tableName</code> 属性值包含空白时，是 <i>true</i>.</p></td>
+  </tr>
+  <tr>
+    <td valign="top">delimitAllColumns</td>
+    <td>指示是否给生成SQL中所有的列名添加分隔符。
+		这是一种给每个列添加<code>&lt;columnOverride&gt;</code>来指定列需要被分隔的替代方式。
+		这对类似PostgreSQL这种使用小写标识符的数据库很有用。
+        <p>分隔符在
+        <a href="context.html">&lt;context&gt;</a> 元素上指定。</p>
+        <p>默认值是 <i>false</i>.</p></td>
+  </tr>
+</table>
+
+<h2>子元素</h2>
+<ul>
+  <li><a href="property.html">&lt;property&gt;</a> (0..N)</li>
+  <li><a href="generatedKey.html">&lt;generatedKey&gt;</a> (0 or 1)</li>
+  <li><a href="columnRenamingRule.html">&lt;columnRenamingRule&gt;</a> (0 or 1)</li>
+  <li><a href="columnOverride.html">&lt;columnOverride&gt;</a> (0..N)</li>
+  <li><a href="ignoreColumn.html">&lt;ignoreColumn&gt;</a> (0..N)</li>
+</ul>
+
+<h2>支持的属性</h2>
+<p>下面的表格列出了所有可用的 <a href="property.html">&lt;property&gt;</a> 子元素:</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性名</th>
+    <th>属性值</th>
+  </tr>
+  <tr>
+    <td valign="top">constructorBased</td>
+    <td>
+	  此属性用于选择代码生成器是否生成接受类中的每个字段的值的类的构造函数。
+	  此外，SQL结果映射也会为每个字段生成使用构造方法而不是"setter"的方式。
+      <p>此属性仅适用于MyBatis3，iBATIS2将会被忽略。</p>
+      <p>如果"immutable"属性设置为"true"，这个属性将会被忽略。</p>
+      <p><i>默认值是 false</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">ignoreQualifiersAtRuntime</td>
+    <td>如果设置为true，MBG不会讲schema或catalog添加到生成SQL中的表名上。
+		如果您有几个schemas中的表具有相同的名称，这是非常有用的。
+		您可以使用MBG生成基于在一个schema上的表，但是运行时不包含schema。<p/>
+        <p><i>默认值是 false</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">immutable</td>
+    <td>此属性用于选择MBG是否会生成不可变的模型类。
+	  这意味着这些类不会包含"setter"方法，而且通过构造参数接收类中所有字段的值。
+      <p>如果设置为true,将会忽略"constructorBased"属性，
+	  强制生成通过参数化构造方法的模型类。</p>
+      <p>此属性仅适用于MyBatis3，iBATIS2将会被忽略。</p>
+      <p><i>默认值是 false</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">modelOnly</td>
+    <td>
+	  此属性用于选择MBG是否只会为表生成模型类。
+      <p>如果设置为true，那么就不会生成Java客户端类。
+	  如果 &lt;sqlMapGenerator&gt; 配置了，并且属性设置为true，那么MGB将会在该表的SQL映射XML中只生成结果映射元素。</p>
+      <p>如果设置为true，这个值会覆盖&lt;table&gt;元素上所有的"enable*"属性，将不会生成任何CRUD方法。</p>
+      <p><i>默认值是 false</i></p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">rootClass</td>
+    <td>这个属性可以用来指定所有生成的Java模型类的基类。
+	  如果表包含主键，MBG会将该值指定为主键对象的超类。
+	  或者其他记录对象的超类。
+	  这个值将会覆盖Java模型生成配置中配置的<code>rootClass</code>
+      <p><b>重要:</b> 如果MBG可以加载基类，通常生成的属性不会覆盖和基类中完全匹配的属性。
+       完全匹配属性的定义如下</p>
+       <ul>
+         <li>属性名称完全相同</li>
+         <li>属性的类型相同</li>
+         <li>属性有一个"getter"方法</li>
+         <li>属性有一个"setter"方法</li>
+       </ul>
+      <p>如果指定这个值，这个属性值应该是一个完全限定的类名(例如：com.mycompany.MyRootClass).</p></td>
+  </tr>
+  <tr>
+    <td valign="top">rootInterface</td>
+    <td>这个属性可以用来指定所有生成的DAO接口对象的父接口。
+	  这个属性值会覆盖DAO生成器配置中配置的<code>rootInterface</code>属性。
+      <p><b>重要:</b> MBG 不会校验接口是否存在或者合法。</p>
+      <p>如果指定这个值，这个属性值应该是一个完全限定的接口名 (例如：com.mycompany.MyRootInterface).</p></td>
+  </tr>
+  <tr>
+    <td valign="top">runtimeCatalog</td>
+    <td>如果您指定了这个属性值，MBG会在生成的SQL中使用这个catalog，而不是前面配置的<code>catalog</code> 属性值。
+        当您生成代码的catalog和运行时的catalog不一样时，这会非常有用。</td>
+  </tr>
+  <tr>
+    <td valign="top">runtimeSchema</td>
+    <td>如果您指定了这个属性值，MBG会在生成的SQL中使用这个schema，而不是前面配置的<code>schema</code> 属性值。
+	    当您生成代码的schema和运行时的schema不一样时，这会非常有用。</td>
+  </tr>
+  <tr>
+    <td valign="top">runtimeTableName</td>
+    <td>如果您指定了这个属性值，MBG会在生成的SQL中使用这个表名，而不是前面配置的<code>tableName</code> 属性值。
+	    当您想在Oracle中使用公共同义词生成对象时，这会非常有用。
+		在这种情况下，您将需要生成对象的同义词的指向您实际表。那就在此属性中指定同义词名称。
+		在使用公共同义词的大多数情况下，您还需要设置 <code>ignoreQualifiersAtRuntime</code>属性。</td>
+  </tr>
+  <tr>
+    <td valign="top">selectAllOrderByClause</td>
+    <td>这个属性可以用于指定将会加到 <code>selectAll</code> 方法中的order by语句。
+		这仅适用于您使用<code>MyBatis3Simple</code>目标运行环境时。
+		MBG会将您在这儿指定的任何属性值前面追加<code>order by</code>，
+		因此该属性赢仅包含列表中的列(例如 <code>ID1, ID2</code> 或 <code>ID1 desc, ID2 asc</code>)
+        </td>
+  </tr>
+  <tr>
+    <td valign="top">useActualColumnNames</td>
+    <td>如果设置为true,那么MBG会使用从数据库元数据获取的列名作为生成的实体对象的属性。
+        如果为false(默认值)，MGB将会尝试将返回的名称转换为驼峰形式。
+        在这两种情况下，可以通过 &lt;columnOverride&gt;  元素显示指定，在这种情况下将会忽略这个（useActualColumnNames）属性。
+        <p>例如，假设一个表包含START_DATE列，如果这个属性是"true",
+        那么MBG生成的属性名是<code>START_DATE</code> - 这意味着这个值的getter和setter方法将会是
+        <code>getSTART_DATE()</code> 和 <code>setSTART_DATE()</code>.
+        如果这个属性值是fasle,MBG将会生成的属性名是 <code>startDate</code> - 这意味着这个值的getter和setter方法将会是 <code>getStartDate()</code> 和
+        <code>setStartDate()</code>.</p>
+        <p><i>默认值是 false</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">useColumnIndexes</td>
+    <td>如果是true,MBG生成resultMaps的时候会使用列的索引,而不是结果中列名的顺序.
+        当表中的列名的区别只是大小写的时候,这会非常有用.
+        这个支持还会有一个轻微的性能优势.<p/>
+        <p><i>默认值是 false</i></p>
+        <p><b>重要提示:</b> 当目标运行环境是Mybatis版本3时不支持这个属性.</p></td>
+  </tr>
+  <tr>
+    <td valign="top">useCompoundPropertyNames</td>
+    <td>如果是true,那么MBG生成属性名的时候会将列名和列备注接起来.
+        这对于那些通过第四代语言自动生成列(例如:FLD22237),但是备注包含有用信息(例如:"customer id")的数据库来说很有用.
+        在这种情况下,MBG会生成属性名FLD2237_CustomerId.
+        <p><i>默认值是 false</i></p></td>
+  </tr>
+</table>
+
+<h2>示例</h2>
+<p>这个元素指定我们总是想为一个在MYSCHEMA schema上的叫做 MYTABLE 的表生成代码.
+我们还想忽略表中一个叫"fred"的列,而且我想还想重写"BEG_DATA"列,以便生成的属性名是"startDate".</p>
+<pre>
+&lt;table tableName="MYTABLE" schema="MYSCHEMA"&gt;
+  &lt;ignoreColumn column="fred"/&gt;
+  &lt;columnOverride column="BEG_DATE" property="startDate"/&gt;
+&lt;/table&gt;
+</pre>
+
+</body>
+</html>

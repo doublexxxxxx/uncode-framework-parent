@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>JAVA实体对象</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>JAVA实体对象</h1>
+<p>MyBatis Generator (MBG)根据数据库表字段生成Java类.
+MBG生成的是简单实体对象而非带业务逻辑的实体对象(详见<a href="../philosophy.html">设计理念</a>介绍).MBG根据表特性和配置生成不同类型的实体对象.</p>
+
+<p>MBG生成字段和方法时包含JavaDoc标签
+<code>@mbggenerated</code>.运行Eclipse插件时,MBG会将每个Java对象中的JavaDoc标签删除或替换.其他地方不会发生变化.
+在这种情况下,您在Java类中添加的字段和方法就不用担心丢失--不包括包含了JavaDoc<code>@mbggenerated</code>标签部分内容.</p>
+<p>离开Eclipse插件，您需要手动合并Java文件,但是使用JavaDoc的<code>@mbggenerated</code>标签用来了解删除以前版本的文件是否安全.</p>
+<p>以下描述生成不同的实体对象.MBG根据<a href="../configreference/context.html">&lt;context&gt;</a>的<code>defaultModelType</code>属性(支持conditional、flat、hierarchical三个值)和<a href="../configreference/table.html">&lt;table&gt;</a>的<code>modelType</code>(此属性用于覆盖默认的defaultModelType)属性配置生成不同的实体对象.</p>
+
+<p>任何字段配置了<a href="../configreference/ignoreColumn.html">&lt;ignoreColumn&gt;</a>,自动生成时不会添加到Java对象中.</p>
+
+<p>注意: 下面描述中"BLOB"指任何列的BLOB数据类型包括BLOB, CLOB, LONGVARCHAR, 和 LONGVARBINARY.</p>
+
+<h2>主键类</h2>
+<p>主键类在表中包含一个主键的字段属性.
+(MBG)根据表列明自动生成属性名称.自动生成的属性名称可以配置<code>&lt;columnOverride&gt;</code>属性覆盖.
+</p>
+<p>类名默认情况是<code>&laquo;TableName&raquo;Key</code>,如果<code>&lt;table&gt;</code>配置了<code>domainObjectName</code>属性那么类名是<code>&laquo;domainObjectName&raquo;Key</code>.</p>
+
+<p>如果表中存在一个字段的主键将会生成hierarchical类型实体对象.
+如果表中存在多列组合主键将会生成conditional类型实体对象.主键类是不会生成flat类型实体对象
+model.</p>
+
+<h2>记录类</h2>
+<p>主键类在表中不包含主键、BLOB的字段属性.
+如果只有一个主键记录类将继承主键类.
+(MBG)根据表列明自动生成属性名称.自动生成的属性名称可以配置<code>&lt;columnOverride&gt;</code>属性覆盖.</p>
+
+<p>类名默认情况是<code>&laquo;TableName&raquo;</code>,如果<code>&lt;table&gt;</code>配置了<code>domainObjectName</code>属性那么类名是<code>&laquo;domainObjectName&raquo;</code>配置的值.</p>
+
+<p>如果表中不存在组合主键、BLOB列将生成hierarchical类型实体对象.如果表中不存一个字段的主键、BLOB列或只有一个主键或者一个BLOB列将生成conditional类型实体对象.记录类常常生成flat类型实体对象.</p>
+
+<h2>BLOB记录类</h2>
+<p>BLOB记录类在表中包含BLOB字段属性.
+如果表中只存在一个字段该类将继承基础类,
+或将继承主键类(注意:MBG不支持表中只包含BLBO列).
+(MBG)根据表列明自动生成属性名称.自动生成的属性名称可以配置<code>&lt;columnOverride&gt;</code>属性覆盖.</p>
+
+<p>BLOB记录类调用<code>selectByPrimaryKey</code>或<code>selectByExampleWithBLOBs</code>方法返回BLOB字段值.</p>
+
+<p>类名默认情况是<code>&laquo;TableName&raquo;WithBLOBs</code>,如果<code>&lt;table&gt;</code>配置了<code>domainObjectName</code>属性那么类名是<code>&laquo;domainObjectName&raquo;WithBLOBs</code>.</p>
+
+<p>如果表中存在一个BLOB列将生成hierarchical类型实体对象.
+如果表中存在多个BLOB列将生成conditional类型实体对象.BLOB记录类是不会生成flat类型实体对象.</p>
+
+<h2>Example类</h2>
+<p>Example类用来处理MBG动态查询功能.
+Example类设置条件用于动态WHERE子句下列方法中:</p>
+<ul>
+  <li><code>selectByExample</code></li>
+  <li><code>selectByExampleWithBLOBs</code></li>
+  <li><code>deleteByExample</code></li>
+  <li><code>countByExample</code></li>
+  <li><code>updateByExample</code></li>
+</ul>
+
+<p>Example类不继承任何实体对象.</p>
+
+<p>类名默认情况是<code>&laquo;TableName&raquo;Example</code>,如果<code>&lt;table&gt;</code>配置了<code>domainObjectName</code>属性那么类名是<code>&laquo;domainObjectName&raquo;Example</code>.</p>
+
+<p>如果方法被启动Example类将生成任何<code>*ByExample</code>方法.注意:如果表中有非常多的字段该类可能很大,但
+DAO生成的XML是比较小的.
+如果您不需要使用动态WHERE子句,您可以禁用生成这些方法.</p>
+
+<p>详见<a href="exampleClassUsage.html">Example类使用说明</a>了解详情.</p>
+
+</body>
+</html>

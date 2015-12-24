@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;generatedKey&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;generatedKey&gt; 元素</h1>
+<p>&lt;generatedKey&gt; 元素用来指定自动生成主键的属性（identity字段或者sequences序列）。
+如果指定了这个元素，MyBatis Generator (MBG)会在生成insert的SQL映射文件中插入一个合适的 &lt;selectKey&gt; 元素。
+这个元素是 <a href="table.html">&lt;table&gt;</a> 元素的一个可选的子元素。</p>
+
+<h2>必选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td>column</td>
+    <td>生成列的列名。</td>
+  </tr>
+  <tr>
+    <td valign="top">sqlStatement</td>
+    <td>将返回新值的 SQL 语句。如果这是一个identity列，您可以使用其中一个预定义的的特殊值。
+        或者为您的数据库使用一个合适的语句。
+        预先定义好的特殊值如下:
+          <table>
+            <tr>
+              <th>Cloudscape</th>
+              <td>这将转化为: <code>VALUES IDENTITY_VAL_LOCAL()</code></td>
+            </tr>
+            <tr>
+              <th>DB2</th>
+              <td>这将转化为: <code>VALUES IDENTITY_VAL_LOCAL()</code></td>
+            </tr>
+            <tr>
+              <th valign="top">DB2_MF</th>
+              <td>这将转化为: <br/> <code>SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1</code>
+                <p>为运行在zOS（主框架）或者有些情况是iSeries (AS/400)上的DB2数据库使用该值</p>
+              </td>
+            </tr>
+            <tr>
+              <th>Derby</th>
+              <td>这将转化为: <code>VALUES IDENTITY_VAL_LOCAL()</code></td>
+            </tr>
+            <tr>
+              <th>HSQLDB</th>
+              <td>这将转化为: <code>CALL IDENTITY()</code></td>
+            </tr>
+            <tr>
+              <th valign="top">Informix</th>
+              <td>这将转化为: <code>select dbinfo('sqlca.sqlerrd1') from systables where tabid=1</code></td>
+            </tr>
+            <tr>
+              <th>MySql</th>
+              <td>这将转化为: <code>SELECT LAST_INSERT_ID()</code></td>
+            </tr>
+            <tr>
+              <th>SqlServer</th>
+              <td>这将转化为: <code>SELECT SCOPE_IDENTITY()</code></td>
+            </tr>
+            <tr>
+              <th>SYBASE</th>
+              <td>这将转化为: <code>SELECT @@IDENTITY</code></td>
+            </tr>
+            <tr>
+              <th valign="top">JDBC</th>
+              <td>这会配置MBG使用MyBatis3支持的JDBC标准的生成key来生成代码。
+                  这是一个独立于数据库获取标识列中的值的方法。
+                  <p><b>重要:</b> 只有当目标运行为MyBatis3时才会产生正确的代码。
+                  如果与iBATIS2一起使用目标运行时会产生运行时错误的代码。</p>
+              </td>
+            </tr>
+          </table>
+    </td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">identity</td>
+    <td>当设置为 <code>true</code> 时,该列会被标记为identity列，
+        并且 <code>&lt;selectKey&gt;</code> 元素会被插入在insert后面。
+        当设置为 <code>false</code> 时， <code>&lt;selectKey&gt;</code> 会插入到insert之前（通常是序列）。
+        <p><b>重要:</b> 即使您 <code>type</code> 属性指定为"post"，
+           您仍然需要为 identity 列将该参数设置为 "true"。
+           这将标志MBG从插入列表中删除该列。</p>
+        <p>默认值是 <i>false</i>.</p></td>
+  </tr>
+  <tr>
+    <td valign="top">type</td>
+    <td>如果指定，则此值将被添加为生成selectKey元素的类型。
+        此属性的值应该是"pre"或"post"。
+        <p><b>重要:</b> 如果指定此属性的值，然后生成selectKey元素将永远被放置在insert语句之前。</p></td>
+  </tr>
+</table>
+
+<h2>子元素</h2>
+<p>无</p>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>运行 MyBatis Generator</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>运行 MyBatis Generator</h1>
+<p>MyBatis Generator (MBG) 可以通过以下方式运行:</p>
+<ul>
+  <li>从
+    <a href="runningFromCmdLine.html">命令提示符</a> 使用 XML 配置文件</li>
+  <li>作为 <a href="runningWithAnt.html">Ant 任务</a> 使用 XML 配置文件</li>
+  <li>作为 <a href="runningWithMaven.html">Maven Plugin</a></li>
+  <li>从另一个 <a href="runningWithJava.html">Java 程序</a> 使用 XML 配置文件</li>
+</ul>
+<p>每种方法的详细信息都在链接的页面上。</p>
+<p><b>注意:</b>还有一个可以良好的集成到Eclipse的MBG插件可以提供额外的功能。
+Eclipse 启用 Ant 任务，并支持 Java 文件的自动合并。安装Eclipse插件请参考
+<a target="_blank" href="http://mybatis.org">MyBatis</a>站点页面的信息。</p>
+
+<p><b>重要:</b> 当运行在像Eclipse这样的IDE环境的外部运行时,
+  MBG解释<code>targetProject</code> 和 <code>targetPackage</code>的所有XML属性如下:</p>
+<ul>
+  <li><code>targetProject</code> 被假定为一个已存在的目录结构。
+    如果目录结构不存在MBG将会失败。有一个例外 - 当MBG通过Maven插件运行时。
+    请从Maven插件页面参阅<code>targetProject</code>在Maven中的详细解释。</li>
+   <li><code>targetPackage</code> 将会转换为 <code>targetProject</code> 适当的子目录结构。
+   如果有必要，MBG会创建这些子目录。</li>
+</ul>
+</body>
+</html>

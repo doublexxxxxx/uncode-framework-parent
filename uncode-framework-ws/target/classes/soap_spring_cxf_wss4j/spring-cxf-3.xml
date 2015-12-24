@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://cxf.apache.org/core
+       http://cxf.apache.org/schemas/core.xsd
+       http://cxf.apache.org/jaxws
+       http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <bean id="wss4jInInterceptor" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+        <constructor-arg>
+            <map>
+                <!-- 验签（使用对方的公钥） -->
+                <entry key="action" value="Signature"/>
+                <entry key="signaturePropFile" value="server.properties"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <jaxws:endpoint id="helloService"
+                    implementor="#helloServiceImpl"
+                    address="/soap/hello">
+        <jaxws:inInterceptors>
+            <ref bean="wss4jInInterceptor"/>
+        </jaxws:inInterceptors>
+    </jaxws:endpoint>
+
+    <cxf:bus>
+        <cxf:features>
+            <cxf:logging/>
+        </cxf:features>
+    </cxf:bus>
+
+</beans>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Java客户端对象</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>Java客户端对象</h1>
+<p>MyBatis Generator (MBG)生成几种类型的Java客户端对象.用Java的客户端对象与所产生的XML交互容易得多.
+对于配置中的每个表，MBG生成一个或多个Java客户端对象.如MyBatis的3,
+这些都接口映射.对于iBATIS的2.x中，这些都是DAO接口和实现类.
+生成Java客户对象是可选的,由<code>&lt;javaClientGenerator&gt;</code>配置. MBGr可以产生以下的Java客户短对象类型:
+</p>
+<ul>
+  <li>如MyBatis 3.x:
+    <ul>
+      <li>XMLMAPPER - 用与支持MyBatis 3.x映射</li>
+    </ul>
+  </li>
+  <li>如iBATIS 2.x:
+    <ul>
+      <li>IBATIS - 使用iBATIS DAO框架</li>
+      <li>SPRING - 与Spring框架联合使用</li>
+      <li>GENERIC-CI - 使用不依赖iBATIS数据映射</li>
+      <li>GENERIC-SI - 使用不依赖iBATIS数据映射</li>
+    </ul>
+  </li>
+</ul>
+
+<p>每个字段和方法产生包括JavaDoc标签<code>@mbggenerated</code>.Eclipse插件运行时,
+运行中每个字段和方法包括此Javadoc标记将被删除并替换.在类中的其他任何字段或方法将保持不变.
+考虑到这一点,您可以不用担心加入的字段和方法丢失 -不包括在Javadoc标签<code>@mbggenerated</code>中内容.</p>
+
+<p>离开Eclipse插件,您需要手动合并Java文件,但是使用JavaDoc的
+<code>@mbggenerated</code>标签用来了解删除以前版本的文件是否安全.</p>
+
+<p>注意: 下面描述中"BLOB"指任何列的BLOB数据类型包括BLOB, CLOB, LONGVARCHAR, 和 LONGVARBINARY.</p>
+
+<h2>通用DAO方法</h2>
+<p>根据表的特性,以及配置选项,Java客户端自动生成如下方法:</p>
+<ul>
+  <li>countByExample</li>
+  <li>deleteByPrimaryKey</li>
+  <li>deleteByExample</li>
+  <li>insert</li>
+  <li>insertSelective</li>
+  <li>selectByPrimaryKey</li>
+  <li>selectByExample</li>
+  <li>selectByExampleWithBLOBs</li>
+  <li>updateByPrimaryKey (否更新BLOB字段需要重写方法)</li>
+  <li>updateByPrimaryKeySelective (只更新参数类非空字段)</li>
+  <li>updateByExample (否更新BLOB字段需要重写方法)</li>
+  <li>updateByExampleSelective (只更新参数类非空字段)</li>
+</ul>
+<p>对于包含BLOB的表,MBG通过生成不同的对象和方法使您更容易使用BLOB字段,是否忽略它们,这取决于具体情况.</p>
+<p>详见
+<a href="exampleClassUsage.html">Example类使用说明</a>
+中<code>selectByExample</code>方法使用.</p>
+
+<h2>XMLMAPPER 客户端 (MyBatis 3.x)</h2>
+<p>XMLMAPPER客户端是将接口方法映射到生成的XML映射文件中.例如,MBG自动生成的接口名为<code>MyTableMapper</code>.您可以如下使用该接口:</p>
+<pre>
+  SqlSession sqlSession = sqlSessionFactory.openSession();
+
+  try {
+    MyTableMapper mapper = sqlSession.getMapper(MyTableMapper.class);
+    List&lt;MyTable&gt; allRecords = mapper.selectByExample(null);
+  } finally {
+    sqlSession.close();
+  }
+</pre>
+<p>有关如何创建实例的详细信息,请参阅MyBatis文档怎么创建<code>sqlSessionFactory</code>实例.</p>
+
+<h2>IBATIS DAOs (iBATIS 2.x)</h2>
+<p>iBATIS DAO依赖于iBATIS的DAO框架(iBATIS的一个可选部分 - 现在已经过时).
+他们继承SqlMapDaoTemplate类和初始化DAOManager对象的实例,并且调用方法执行不同的语句.</p>
+<p>MBG不会为您更新“dao.xml”文件 - 您必须添加手动相应的内容.</p>
+<p>iBATIS DAO框架是一个非常基础的IoC容器,如果您尚未使用像Spring或PicoContainer的管理依赖关系的框架,iBATIS DAO框架可能会有用.
+然而,该框架现在已经过时,我们建议您使用Spring.</p>
+
+<h2>SPRING DAOs (iBATIS 2.x)</h2>
+<p>SPRING DAO依赖于Spring框架.他们继承Spring的SqlMapClientDaoSupport类通过Spring容器构造DAO.</p>
+
+<h2>GENERIC-CI DAOs (iBATIS 2.x)</h2>
+<p>GENERIC-CI DAO调用iBATIS的SqlMapClient接口.该接口的实例是通过构造函数注入.</p>
+
+<h2>GENERIC-SI DAOs (iBATIS 2.x)</h2>
+<p>GENERIC-SI DAO调用iBATIS的SqlMapClient接口.该接口的实例是通过setter注入.</p>
+
+</body>
+</html>

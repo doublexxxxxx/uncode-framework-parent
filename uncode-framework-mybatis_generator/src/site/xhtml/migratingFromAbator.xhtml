@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>从Abator迁移</title>
+    <link rel="stylesheet" type="text/css" href="mbgstyle.css"></link>
+</head>
+<body dir="ltr">
+<h1>从Abator迁移</h1>
+<p>此页面详细的MyBatis发生器（MBG）和Abator之间变化。对于大多数用户来说，这些迁移应该很简单。你只需要自定义类，去扩展Ibator的类提供的代码生成器或Java类型解析，就可以实现。</p>
+<p>这些变化主要在三个大类：从必须要修改的配置到不太常见的配置。如果你正在使用XML配置MBG，特别要注意这些修改。如果你使用基于Java的配置，只需要做一下小的修改，从的XML变化的描述可以看出来。</p>
+<h2>必须修改的地方</h2>
+<ul>
+    <li>该DTD已经改变。新的DOCTYPE应该是<pre>&lt;！DOCTYPE generatorConfiguration PUBLIC“ -  // mybatis.org//DTD MyBatis的发电机配置1.0 // EN”“http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd”&gt;</pre>
+    </li>
+    <li>&lt;abatorConfiguration&gt;元素被重命名为<code>&lt;generatorConfiguration&gt;</code></li>
+    <li><code>&lt;abatorContext&gt;</code>元素被重命名为<code>&lt;context&gt;</code></li>
+    <li><code>&lt;daoGenerator&gt;</code>元素被重命名为<code>&lt;javaClientGenerator&gt;</code></li>
+</ul>
+<h2>注意修改的地方</h2>
+<ul>
+    <li>MyBatis3现在是默认的运行时。</li>
+    <li><code>&lt;context&gt;</code>元素必须要设置一个ID</li>
+    <li>该<code>generatorSet</code>属性从<code>&lt;context&gt;</code>元素中删除，并更换成<code>targetRuntime</code>属性。此特性的有效值为<code>Ibatis2Java2</code> ， <code>Ibatis2Java5</code> ，或<code>MyBatis3</code> 。MBG不支持针对旧版本的Abator配置 - 所以iBATIS的版本必须2.2.0或更高。</li>
+    <li>该MBG类加载策略已大幅改变，我们建议您管理外部MBG运行时类路径。如果你的配置文件在类路径中，你必须做以下修改：<ul>
+        <li>在<code>&lt;generatorConfiguration&gt;</code>元素下面添加一个子元素<a href="configreference/classPathEntry.html">&lt;classPathEntry&gt;</a>来指定你的配置文件在位置。</li>
+        <li><code>&lt;classPathEntry&gt;</code>元素不再允许作为<code>&lt;jdbcConnection&gt;</code>的子元素。</li>
+        <li>“rootClasspath”属性对<code>&lt;javaModelGenerator&gt;</code>元素不再有效。</li>
+    </ul>
+    </li>
+</ul>
+<h2>修改较小的地方</h2>
+<ul>
+    <li><code>type</code>属性从<code>&lt;javaModelGenerator&gt;</code>和<code>&lt;sqlMapGenerator&gt;</code>元素中删除。MBG有提供一个完全不同的方式，让你可以自由的扩展。具体的扩展方法，点击<a href="reference/extending.html">扩展MBG</a>查看。</li>
+    <li><code>JavaTypeResolver</code>接口已发生变化，简化了许多。如果指定了一个自定义执行<code>&lt;javaTypeResolver&gt;</code>元素，必须要实现这个类。</li>
+    <li><code>ProgressCallback</code>界面显著改变。如果实现了这个接口，对于一些其他的执行环境，则需要重写这个类的实现。</li>
+</ul>
+</body>
+</html>

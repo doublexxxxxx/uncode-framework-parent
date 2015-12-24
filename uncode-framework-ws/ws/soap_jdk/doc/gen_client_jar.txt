@@ -1,0 +1,3 @@
+wsimport http://localhost:8080/ws/soap/hello?wsdl
+jar -cf client.jar .
+rmdir /s/q demo

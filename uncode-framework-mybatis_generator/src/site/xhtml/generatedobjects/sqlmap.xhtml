@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>SQL映射文件</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>SQL映射文件</h1>
+<p>MyBatis Generator (MBG)生成SQL映射文件遵循MyBatis或iBATIS SQL Map DTD规范.
+在表的基础上这些文件还包含了不同的标签和属性配置.
+MBG按照配置表生成SQL映射文件.表名就是SQL映射文件的命名空间(前提是数据库支持schema和catalog,主流数据库对schema和catalog都支持).MBG不会自动把
+SQL映射文件到MyBatis/iBATIS配置文件中 - 您必须手动把<code>xxxMapper.xml</code>文件加入到配置文件中(或者您使用一个插件使MBG生成配置文件;Spring配置文件可以实现自动扫描<code>xxxMapper.xml</code>和接口).</p>
+
+<p>每个自动生成的XML方法标签下都包含<code>@mbggenerated</code>的注释块.在运行的时候<code>@mbggenerated</code>注释块将删除和替换.其他部分内容将保持不变.
+考虑到这点,不用担心在运行时丢失您新增内容--不包括<code>@mbggenerated</code>块内容.</p>
+<p>以下部分描述了将要生成的元素.</p>
+
+<p>注意:下面描述中"BLOB"指任何列的BLOB数据类型包括BLOB, CLOB, LONGVARCHAR, 和 LONGVARBINARY.</p>
+
+<h2>结果集</h2>
+<p>结果集用于数据库表列映射Java对象的属性.
+结果集(和相应的查询语句)不包括如下情况:</p>
+<ul>
+  <li>任何列配置<code>&lt;ignoreColumn&gt;</code>属性将被会被忽略</li>
+  <li>任何BLOB字段(详见有关BLOBs字段相关映射)</li>
+</ul>
+<p>对于列配置<code>&lt;columnOverride&gt;</code>属性将映射成配置的名称.没有配置使用的是默认的属性和JDBC类型.</p>
+<p>对于自定义连接查询结果集继承一个结果集是一种非常常见的用法.
+对于其他连接查询也想使用该结果集在MBG自动生成的时候需要配置前缀.详见<a href="../configreference/table.html">&lt;table&gt;</a>属性alias配置前缀,这样做法可以区分表中相同字段.</p>
+<p>如果table配置enableSelectByExample、enableSelectByPrimaryKey属性为true,MBG会生成结果集,table默认这两个配置都是true,所以大部分情况下都会生成resultMap.</p>
+
+<h2>BLOB结果集</h2>
+<p>表中存在BLOB字段时MBG会自动生成一个BLOB结果集,BLOB结果集继承了除BLOB字段外的基础结果集.
+我们提供不同的版本查询语句,来适应查询结果中是否需要BLOB字段.</p>
+
+<p>BLOB结果集(和相应的查询语句)不包括如下情况:</p>
+<ul>
+  <li>任何列配置<code>&lt;ignoreColumn&gt;</code>属性将被会被忽略</li>
+</ul>
+<p>对于列配置<code>&lt;columnOverride&gt;</code>属性将映射成配置的名称.没有配置使用的是默认的属性和JDBC类型.</p>
+<p>对于自定义连接查询结果集继承一个结果集是一种非常常见的用法.对于其他连接查询也想使用该结果集,在MBG自动生成的时候需要配置前缀.详见<a href="../configreference/table.html">&lt;table&gt;</a> 性alias配置前缀,这样做法可以区分表中相同字段.</p>
+<p>如果table存在BLOB字段且配置了enableSelectByExample、enableSelectByPrimaryKey属性,MBG会生成BLOB结果集,table默认这两个配置都是true所以大部分情况下都会生成resultMap.</p>
+
+<h2>Where条件SQL语句</h2>
+<p>"by example"方法重用Where条件.被重用的Where条件不包括BLOB字段.大部分表WHERE条件都不支持BLOB字段.</p>
+<p>"by example"语句被配置将动态生成Where条件语句.</p>
+
+<h2>根据主键查询</h2>
+<p>select语句按照主键查询返回一行数据.如果表中存在BLOB字段,查询结果中会包含该字段.</p>
+<p>如果table配置了enableSelectByExample、enableSelectByPrimaryKey属性为true,MBG会生成结果集,table默认这两个配置都是true所以大部分情况下都会生成resultMap.</p>
+
+<h2>根据条件查询</h2>
+<p>根据条件查询结果集和自动生成对象相匹配.
+通过实现一个简单的"query by example"方法可以适用于不同的数据库查询.就算表中存在BLOB字段该查询结果集也不会返回该BLOB字段
+(具体返回BLOB字段详见根据条件查询包含BLOB字段结果集部分描述).</p>
+<p><b>重要:</b>条件为空或者没有设置条件时,会将表中<b>所有</b>数据查询出来.</p>
+<p>如果table配置了enableSelectByExample属性为true,MBG会生成Example查询.</p>
+
+<h2>根据条件查询包含BLOB字段(方法:selectByExampleWithBLOBs)</h2>
+<p>Example查询结果集和自动生成对象相匹配.
+通过实现一个简单的"query by example"方法可以适用于不同的数据库查询.算表中存在BLOB字段该查询结果集将返回该BLOB字段.</p>
+<p><b>重要:</b> 查询条件为空或者没有设置查询条件时,会将表中<b>所有</b>数据查询出来.</p>
+<p>如果table配置了enableSelectByExample属性为true,MBG会生成包含BLOB字段的Example查询.</p>
+
+<h2>插入</h2>
+<p>该方法可以插入表中所有字段(包括BLOB字段),但列配置了<code>&lt;ignoreColumn&gt;</code>属性将不会插入.</p>
+<p>如果表有主键自动增长(自动增长列或序列),table子元素配置<code>&lt;generatedKey&gt;</code>属性,MBG会生成<code>&lt;selectKey&gt;</code>块语句,一般情况下都不需要配置使用数据库自动增长即可,除非表字段需要使用序列.</p>
+<p><b>重要提示:</b>与iBATIS2和MyBatis3插入的差异.差异如下:</p>
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th>运行</th>
+    <th>特性</th>
+  </tr>
+  <tr>
+    <td>iBATIS2</td>
+    <td>配置了&lt;generatedKey&gt;属性,插入的时候会返回新的自动增长值.没有配置&lt;generatedKey&gt;属性, 插入返回值为<code>void</code>.</td>
+  </tr>
+  <tr>
+    <td>MyBatis3</td>
+    <td>插入方法将返回插入受影响的行数(通常是0或者1).
+        配置了&lt;generatedKey&gt;属性,自动增长值会被设置在参数对象中返回.</td>
+  </tr>
+</table>
+<p>如果table配置了enableInsert属性为true,MBG会生成该方法.</p>
+
+<h2>选择性插入</h2>
+<p>该方法可以插入表中所有字段(包括BLOB字段),但列配置了<code>&lt;ignoreColumn&gt;</code>属性将不会插入.然而,参数对象<code>为空</code>的列将不会插入值.如果数据库列设置了默认值则取默认值,否则列值是空.
+对于列不允许为<code>空</code>情况-则需要人为确保调用该方法时不为空列确保有值使插入不报错.<b>重要:</b>任何映射到java引用类型的字段都会被该方法插入.</p>
+<p>如果表有主键自动增长(自动增长列或序列),table子元素配置<code>&lt;generatedKey&gt;</code>属性,MBG会生成<code>&lt;selectKey&gt;</code>块语句,一般情况下都不需要配置使用数据库自动增长即可,除非表字段需要使用序列.</p>
+<p><b>重要提示:</b>与iBATIS2和MyBatis3插入的差异.差异如下:</p>
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th>运行</th>
+    <th>特性</th>
+  </tr>
+  <tr>
+    <td>iBATIS2</td>
+    <td>配置了&lt;generatedKey&gt;属性,插入的时候会返回新的自动增长值.没有配置.没有配置&lt;generatedKey&gt; 属性, 插入返回值为<code>void</code>.</td>
+  </tr>
+  <tr>
+    <td>MyBatis3</td>
+    <td>插入方法将返回插入受影响的行数(通常是0或者1).
+        I配置了&lt;generatedKey&gt;属性,自动增长值会被设置在参数对象中返回.</td>
+  </tr>
+</table>
+
+<p>如果table配置了enableInsert属性为true,MBG会生成该方法.</p>
+
+<h2>根据主键更新</h2>
+<p>该方法按照主键修改一行数据.该方法会修改表中所有字段,除非:</p>
+<ul>
+  <li>列配置了<code>&lt;ignoreColumn&gt;</code>属性</li>
+  <li>BLOB字段(详见根据主键更新包含BLOB字段)</li>
+</ul>
+<p>数据库表中存在主键且table配置了enableUpdateByPrimaryKey属性为true,MBG会生成该方法.</p>
+
+<h2>根据主键更新包含BLOB字段</h2>
+<p>该方法按照主键修改一行数据.该方法会修改表中所有字段(包括BLOB字段),除非:</p>
+<ul>
+  <li>列配置了<code>&lt;ignoreColumn&gt;</code>属性</li>
+</ul>
+<p>数据库表中存在主键包含BLOB列且table配置了enableUpdateByPrimaryKey属性为true,MBG会生成该方法.</p>
+
+<h2>根据主键选择性更新</h2>
+<p>该方法按照主键修改一行数据.该方法会更新表中参数对象属性不为空的列.该方法可以被使用更新某些特定的列而不影响所有列数据.  <b>重要:</b>
+任何映射到java引用类型的字段都会被该方法更新.</p>
+<p>数据库表中存在主键且table配置了enableUpdateByPrimaryKey属性为true,MBG会生成该方法.</p>
+
+<h2>根据主键删除记录</h2>
+<p>该方法按照主键删除一行数据.</p>
+<p>数据库表中存在主键且table配置了enableDeleteByPrimaryKey属性为true,MBG会生成该方法.</p>
+
+<h2>根据条件删除记录</h2>
+<p>该方法按照条件将删除一行或者多行数据.</p>
+<p><b>重要:</b>条件为空或者没有设置条件时,
+会将表中<b>所有</b>记录删除.</p>
+<p>如果table配置了enableDeleteByExample属性为true,MBG会生成该方法.</p>
+
+<h2>根据条件查询记录总数</h2>
+<p>该方法按照条件查询表中符合条件记录的记录总数.</p>
+<p><b>重要:</b>条件为空或者没有设置条件时,返回表中所有记录总数.</p>
+<p>如果table配置了enableCountByExample属性为true,MBG会生成该方法.</p>
+
+<h2>根据条件更新记录</h2>
+<p>该方法按照条件更新表中符合条件记录.该方法会修改表中所有字段,除非:</p>
+<ul>
+  <li>列配置了<code>&lt;ignoreColumn&gt;</code>属性</li>
+  <li>BLOB字段(详见根据条件修改记录包含BLOB字段)</li>
+</ul>
+<p><b>重要:</b>条件为空或者没有设置条件时,
+会将表中<b>所有</b>记录更新.</p>
+<p>如果table配置了enableUpdateByExample属性为true,MBG会生成该方法.</p>
+
+<h2>根据条件修改记录包含BLOB字段</h2>
+<p>该方法按照条件更新表中符合条件记录.该方法会修改表中所有字段(包括BLOB字段),除非:</p>
+<ul>
+  <li>列配置了<code>&lt;ignoreColumn&gt;</code>属性</li>
+</ul>
+<p><b>重要:</b>条件为空或者没有设置条件时,
+会将表中<b>所有</b>记录更新.</p>
+<p>如果表存在BLOB字段且table配置了enableUpdateByExample属性为true,MBG会生成该方法.</p>
+
+<h2>根据条件选择性更新记录</h2>
+<p>该方法按照条件更新表中符合条件记录.该方法会更新表中参数对象属性不为空的列.该方法可以被使用更新某些特定的列而不影响所有列数据.<b>重要:</b>
+任何映射到java引用类型的字段都会被该方法更新.</p>
+<p><b>重要:</b>条件为空或者没有设置条件时,
+会将表中<b>所有</b>记录更新.</p>
+<p>如果table配置了enableUpdateByExample属性为true,MBG会生成该方法.</p>
+</body>
+</html>

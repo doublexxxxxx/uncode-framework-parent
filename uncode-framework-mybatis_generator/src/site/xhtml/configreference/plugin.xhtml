@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;plugin&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;plugin&gt; 元素</h1>
+<p>&lt;plugin&gt; 元素用来定义一个插件。插件用于扩展或修改通过MyBatis Generator (MBG)代码生成器生成的代码。
+这是
+<a href="context.html">&lt;context&gt;</a> 元素的一个子元素。
+可以在context指定任意数量的插件。插件将在配置中配置的顺序执行。</p>
+
+<p>有关执行插件的详细信息，请参阅
+<a href="../reference/pluggingIn.html">Implementing Plugins</a> 页面的引用。</p>
+
+<p>有关MyBatis Generator提供的插件代码生成器的详细信息，请参阅
+<a href="../reference/plugins.html">Supplied Plugins</a>提供参考页。</p>
+
+<h2>必选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">type</td>
+    <td>实现该接口的类的完全限定名的插件。该类必须实现该接口
+        <code>org.mybatis.generator.api.Plugin</code>,
+        必须有一个公开默认的构造函数。注意，继承
+        <code>org.mybatis.generator.api.PluginAdapter</code>
+        这个适配器类比继承接口更容易扩展。</td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<p>无</p>
+
+<h2>子元素</h2>
+<ul>
+  <li><a href="property.html">&lt;property&gt;</a> (0 or 1)</li>
+</ul>
+
+</body>
+</html>

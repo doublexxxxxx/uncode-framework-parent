@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;classPathEntry&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;classPathEntry&gt; 元素</h1>
+<p>&lt;classPathEntry&gt; 元素 用于添加运行类路径位置到类路径中的 MyBatis Generator（MBG）。
+&lt;classPathEntry&gt; 元素是<a href="generatorConfiguration.html">&lt;generatorConfiguration&gt;</a> 的子元素.
+MBG 在这些情况下从这些路径下加载类:</p>
+<ul>
+  <li>当加载 JDBC 驱动内省数据库时</li>
+  <li>当加载根类中的 JavaModelGenerator 检查重写的方法时</li>
+</ul>
+
+<p>这个元素是可选的，而且如果您给MGB安装了类路径，您就不需要这个元素(例如 使用<code>java</code>命令时使用参数<code>-cp</code>)。</p>
+
+<p><b>重要说明:</b> 加载扩展一个 MBG 的类或实现 MBG 的接口之一的类时，不会使用这些位置。
+在这种情况下，您必须以相同的方式将 MBG 添加到运行时的类路径下(例如 使用<code>java</code>命令时使用参数<code>-cp</code>)。</p>
+
+<h2>必选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td>location</td>
+    <td> 要添加到类路径中的 JAR/ZIP 文件的完整路径名称或要添加到类路径中的目录。</td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<p>无</p>
+
+<h2>子元素</h2>
+<p>无</p>
+
+
+<h2>例子</h2>
+<p>这里指定了DB2 JDBC驱动的路径:</p>
+<pre>
+&lt;classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" /&gt;
+</pre>
+</body>
+</html>

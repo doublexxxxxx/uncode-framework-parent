@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;context&gt; 元素</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>&lt;context&gt; 元素</h1>
+<p>&lt;context&gt; 元素用于指定生成一组对象的环境。
+子元素用于指定要连接到的数据库、 要生成对象的类型和要内省的表。
+多个 &lt;context&gt; 元素可以在
+<a href="generatorConfiguration.html">&lt;generatorConfiguration&gt;</a>
+元素中列出来，这样可以在同一个MyBatis Generator (MBG)从不同的数据库或者使用不同的生成生成器参数生成对象。</p>
+
+<h2>必选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td>context唯一的标识符。此值将用于某些错误消息。</td>
+  </tr>
+</table>
+
+<h2>可选属性</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td valign="top">defaultModelType</td>
+    <td>
+      这个属性用来设置生成对象类型的默认值。
+      对象类型定义了MBG如何生成实体类。
+      对某些对象类型，MBG会给每一个表生成一个单独的实体类。
+      对另外一些对象类型，MBG会根据表结构生成不同的类。这个属性有以下可选值：
+      <table>
+        <tr>
+          <th valign="top">conditional</th>
+          <td><i>这是默认值</i>
+              <br/>这个模型和hierarchical类似，除了如果那个单独的类将只包含一个字段，将不会生成一个单独的类。
+            因此,如果一个表的主键只有一个字段,那么不会为该字段生成单独的实体类,会将该字段合并到基本实体类中。</td>
+        </tr>
+        <tr>
+          <th valign="top">flat</th>
+          <td>该模型为每一张表只生成一个实体类。这个实体类包含表中的所有字段。</td>
+        </tr>
+        <tr>
+          <th valign="top">hierarchical</th>
+          <td>如果表有主键,那么该模型会产生一个单独的主键实体类,如果表还有BLOB字段，
+            则会为表生成一个包含所有BLOB字段的单独的实体类,然后为所有其他的字段生成一个单独的实体类。
+            MBG会在所有生成的实体类之间维护一个继承关系（注：BLOB类 继承 其他字段类 继承 主键类）。</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">targetRuntime</td>
+    <td>
+      此属性用于指定生成的代码的运行时目标。
+      该属性支持这些特殊的值：
+      <table>
+        <tr>
+          <th valign="top">MyBatis3</th>
+          <td><i>这是默认值</i>
+            <br/>使用这值的时候，MBG会生成兼容MyBatis 3.0或更高版本，
+            兼容JSE 5.0或更高版本的对象（例如Java模型类和Mapper接口会使用泛型）。
+            这些生成对象中的"by example"方法将支持几乎不受限制的动态的where子句。
+            另外，这些生成器生成的Java对象支持JSE 5.0特性，包含泛型和注解。</td>
+        </tr>
+        <tr>
+          <th valign="top">MyBatis3Simple</th>
+          <td><i>这是默认值</i>
+            <br/>使用这值的时候，和上面的MyBatis3类似，但是不会有"by example"一类的方法，只有少量的动态SQL。</td>
+        </tr>
+        <tr>
+          <th valign="top">Ibatis2Java2</th>
+          <td>使用这值的时候，MBG会生成兼容iBATIS 2.2.0或更高版本（除了iBATIS 3），还有Java2的所有层次。
+            这些生成对象中的"by example"方法将支持几乎不受限制的动态的where子句。
+            这些生成的对象不能100%和原生的Abator或其他的代码生成器兼容。</td>
+        </tr>
+        <tr>
+          <th valign="top">Ibatis2Java5</th>
+          <td>使用这值的时候，MBG会生成兼容iBATIS 2.2.0或更高版本（除了iBATIS 3），
+            兼容JSE 5.0或更高版本的对象（例如Java模型类和Dao类会使用泛型）。
+            这些生成对象中的"by example"方法将支持几乎不受限制的动态的where子句。
+            另外，这些生成器生成的Java对象支持JSE 5.0特性，包含泛型和注解。
+            这些生成的对象不能100%和原生的Abator或其他的代码生成器兼容。</td>
+        </tr>
+      </table>
+      <p>如果您想创建一个完全不同的代码生成器，
+        使用一个继承了<code>org.mybatis.generator.api.IntrospectedTable</code>类的权限定类名替换该值。
+        通过这个值，您可以创建您自己的代码生成器，然后插入到代码生成器引擎中。
+        查阅 <a href="../reference/extending.html">扩展 MyBatis Generator</a> 页面获取更多信息。
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">introspectedColumnImpl</td>
+    <td>使用这个值去指定一个继承了<code>org.mybatis.generator.api.IntrospectedColumn</code>类的权限定名称。
+      这可以修改代码生成器计算列信息时候的行为。
+      查阅 <a href="../reference/extending.html">扩展 MyBatis Generator</a> 页面获取更多信息。</td>
+  </tr>
+</table>
+
+<h2>子元素</h2>
+<ul>
+  <li><a href="property.html">&lt;property&gt;</a> (0..N)</li>
+  <li><a href="plugin.html">&lt;plugin&gt;</a> (0..N)</li>
+  <li><a href="commentGenerator.html">&lt;commentGenerator&gt;</a> (0 or 1)</li>
+  <li><a href="jdbcConnection.html">&lt;jdbcConnection&gt;</a> (1 Required)</li>
+  <li><a href="javaTypeResolver.html">&lt;javaTypeResolver&gt;</a> (0 or 1)</li>
+  <li><a href="javaModelGenerator.html">&lt;javaModelGenerator&gt;</a> (1 Required)</li>
+  <li><a href="sqlMapGenerator.html">&lt;sqlMapGenerator&gt;</a> (0 or 1)</li>
+  <li><a href="javaClientGenerator.html">&lt;javaClientGenerator&gt;</a> (0 or 1)</li>
+  <li><a href="table.html">&lt;table&gt;</a> (1..N)</li>
+</ul>
+
+<h2>支持的属性</h2>
+<p>下面的表格列出了所有可用的 <a href="property.html">&lt;property&gt;</a> 子元素:</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>属性名</th>
+    <th>属性值</th>
+  </tr>
+  <tr>
+    <td valign="top">autoDelimitKeywords</td>
+    <td>如果是true，那么MGB会分隔SQL关键字，如果他们被用作表中的列名。
+      MBG维护了许多不同数据库的SQL关键字列表。
+      然而，列表可能不是非常的全面。
+      如果一个特殊的关键字没有在MBG的关键字列表中，
+      您需要通过<code>&lt;columnOverride&gt;</code>强制分隔列。
+      <p>查看
+      <code>org.mybatis.generator.internal.db.SqlReservedWords</code>
+      这个类的源码查看MGB包含的关键字列表。</p>
+      <p><i>默认值是false。</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">beginningDelimiter</td>
+    <td>要用作需要分隔符的 SQL 标识符开头的标识符分隔符的值。
+        MBG会自动分割包含空格的SQL标识符。
+        MGB还会自动分隔在 &lt;table&gt; 或  &lt;columnOverride&gt;中配置了具体要求的标识符。<p/>
+      <p><i>默认值是双引号 (&quot;)。</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">endingDelimiter</td>
+    <td>要使用作为结束的标识符分隔符需要分隔符的 SQL 标识符的值。
+        MBG会自动分割包含空格的SQL标识符。
+        MGB还会分隔在 &lt;table&gt; 或  &lt;columnOverride&gt;中配置了具体要求的标识符。<p/>
+      <p><i>默认值是双引号 (&quot;)。</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">javaFileEncoding</td>
+    <td>通过这个属性设置要使用的Java文件的编码。
+      新生成的Java文件会用这个编码写入到文件系统。
+      如果Java文件已经存在并且可以使用这个编码进行读取，就会执行合并操作。
+        如果没有指定，就会使用平台的默认编码。
+        <p/>
+        <p>查阅 <code>java.nio.charset.Charset</code> 获取可以选择的编码的信息。</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">javaFormatter</td>
+    <td>使用此属性来指定生成的 Java 文件的用户提供 formater 的完整的类名称。
+        这个类必须继承 <code>org.mybatis.generator.api.JavaFormatter</code>
+        而且必须有一个默认（不含参数）的构造方法。
+        每一个context都持有一个单独的javaFormatter的实例。
+        默认的javaFormatter是
+        <code>org.mybatis.generator.api.dom.DefaultJavaFormatter</code>。
+        默认的格式使用内置到Java DOM类的格式。
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">xmlFormatter</td>
+    <td>使用此属性来指定生成的 XML 文件的用户提供 formater 的完整的类名称。
+        这个类必须继承 <code>org.mybatis.generator.api.XmlFormatter</code>
+        而且必须有一个默认（不含参数）的构造方法。
+        每一个context都持有一个单独的xmlFormatter的实例。
+        默认的xmlFormatter是
+        <code>org.mybatis.generator.api.dom.DefaultXmlFormatter</code>。
+        默认的格式使用内置到Java DOM类的格式。
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

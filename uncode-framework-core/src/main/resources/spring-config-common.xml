@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd  
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context-3.0.xsd  
+                        http://www.springframework.org/schema/tx  
+                        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+                        http://www.springframework.org/schema/aop 
+                        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<!-- 开启AOP监听 只对当前配置文件有效 -->
+	<aop:aspectj-autoproxy expose-proxy="true" />
+	<!-- 扫描注解Bean -->
+	<context:component-scan base-package="test">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<bean id="sqlContext" class="org.uncodeframework.core.common.orm.sql.SQLContextFactory"
+		factory-method="createSQLContext">
+		<constructor-arg>
+			<value>classpath:sqls/sql.xml</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- spring工具类 方便在非spring管理环境中获取bean -->
+	<bean id="springUtils" class="org.uncodeframework.core.common.utils.SpringUtils" />
+</beans>

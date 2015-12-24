@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>使用Java运行 MyBatis Generator </title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>使用Java运行 MyBatis Generator </h1>
+<p>MyBatis Generator  (MBG) 可以直接使用Java调用。
+对于配置，您可以使用XML配置文件，或者完全使用Java进行配置。</p>
+<h2>使用XML配置文件从Java运行MBG</h2>
+<p>下面的代码例子展示了如何通过XML配置文件从Java运行MBG。
+   他不显示异常处理，但是编译错误是很明显的 :)</p>
+<pre>
+   List&lt;String&gt; warnings = new ArrayList&lt;String&gt;();
+   boolean overwrite = true;
+   File configFile = new File("generatorConfig.xml");
+   ConfigurationParser cp = new ConfigurationParser(warnings);
+   Configuration config = cp.parseConfiguration(configFile);
+   DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+   MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+   myBatisGenerator.generate(null);
+</pre>
+
+<p>注意:</p>
+<ul>
+   <li>配置文件属性可以通过 ConfigurationParser 的构造函数的参数传递给解析器。如果没有显式传递，配置文件的属性将会从JVM的系统属性搜索。
+       例如，属性 <code>generated.source.dir</code> 可以在配置文件中通过 <code>${generated.source.dir}</code> 被访问。
+   </li>
+   <li>如果没有指定配置文件中的一个属性，这个属性将会原样输出。
+   </li>
+</ul>
+
+<h2>通过基于Java的配置运行MGB</h2>
+<p>下面的代码例子展示了如何通过基于Java的配置运行MGB。
+   他不显示异常处理，但是编译错误是很明显的 :)</p>
+<pre>
+   List&lt;String&gt; warnings = new ArrayList&lt;String&gt;();
+   boolean overwrite = true;
+   Configuration config = new Configuration();
+
+   //   ... fill out the config object as appropriate...
+
+   DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+   MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+   myBatisGenerator.generate(null);
+</pre>
+
+</body>
+</html>

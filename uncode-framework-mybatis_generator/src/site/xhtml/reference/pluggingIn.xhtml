@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>开发插件</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css"></link>
+</head>
+<body>
+<h1>开发插件</h1>
+<p>插件可用于修改或添加到由MyBatis Generator 生成的对象。插件必须实现<code>org.mybatis.generator.api.Plugin</code>接口 。插件接​​口包含许多在代码生成过程的不同阶段被调用的方法。任何特定的插件通常不需要实现整个接口。因此，大多数插件应扩展适配器类<code>org.mybatis.generator.api.PluginAdapter</code> 。适配器类提供基本的插件支持，并为大多数的接口方法（类似于Swing适配器类）提供了空操作的方法。</p>
+
+<p>MyBatis Generator 提供了几个插件（都在包<code>org.mybatis.generator.plugins</code>下 ）。所提供的插件展示了不同类型的可以通过插件完成的任务。插件的源代码是可以下载的，也可以在线浏览<a href="http://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-core/src/main/java/org/mybatis/generator/plugins/" target="_blank">这里</a> 。</p>
+
+<h2>插件的生命周期</h2>
+<p>插件有一个生命周期。插件在代码生成过程的初始化期间创建并且在这个过程中的不同阶段被调用。下面的列表显示了插件的基本生命周期：</p>
+<ol type="1">
+  <li>插件通过默认的构造函数创建</li>
+  <li><code>setContext</code>方法被调用</li>
+  <li><code>setProperties</code>方法被调用</li>
+  <li><code>validate</code>方法被调用。如果该方法返回<code>false</code> ，那么插件中的其他方法都不会再被调用。</li>
+  <li>对于配置中的每个表：<ol type="a">
+    <li><code>initialized</code>方法被调用</li>
+    <li>Java客户端的方法：<sup>1,2</sup>
+      <ol type="i">
+        <li><code>clientXXXMethodGenerated(Method, TopLevelClass, IntrospectedTable)</code> - 当Java客户端实现类生成的时候这些方法被调用.</li>
+        <li><code>clientXXXMethodGenerated(Method, Interface, IntrospectedTable)</code> -当Java客户端接口生成的时候这些方法被调用。</li>
+        <li><code>clientGenerated(Interface, TopLevelClass, IntrospectedTable)</code>方法被调用</li>
+      </ol>
+    </li>
+    <li>模型方法：<sup>1</sup>
+      <ol type="i">
+        <li><code>modelFieldGenerated</code>, <code>modelGetterMethodGenerated</code>,
+          <code>modelSetterMethodGenerated</code> for each field in the class</li>
+        <li><code>modelExampleClassGenerated(TopLevelClass, IntrospectedTable)</code></li>
+        <li><code>modelPrimaryKeyClassGenerated(TopLevelClass, IntrospectedTable)</code></li>
+        <li><code>modelBaseRecordClassGenerated(TopLevelClass, IntrospectedTable)</code></li>
+        <li><code>modelRecordWithBLOBsClassGenerated(TopLevelClass, IntrospectedTable)</code></li>
+      </ol>
+    </li>
+    <li>SQL映射方法：<sup>1</sup>
+      <ol type="i">
+        <li><code>sqlMapXXXElementGenerated(XmlElement, IntrospectedTable)</code> - 当生成SQL映射的每个元素的时候这些方法被调用</li>
+        <li><code>sqlMapDocumentGenerated(Document, IntrospectedTable)</code></li>
+        <li><code>sqlMapDocument(GeneratedXmlFile, IntrospectedTable)</code></li>
+      </ol>
+    </li>
+    <li><code>contextGenerateAdditionalJavaFiles(IntrospectedTable)</code>方法被调用</li>
+    <li><code>contextGenerateAdditionalXmlFiles(IntrospectedTable)</code>方法被调用</li>
+  </ol>
+  </li>
+  <li><code>contextGenerateAdditionalJavaFiles()</code>方法被调用</li>
+  <li><code>contextGenerateAdditionalXmlFiles()</code>方法被调用</li>
+</ol>
+
+<p><b>注意事项:</b><br />
+  <sup>1</sup> -这些方法将被包装的代码生成器调用。如果您提供一个自定义的代码生成器，那么这些方法将仅在自定义代码生成调用它们时调用。<br />
+  <sup>2</sup> -Java客户端的方法只有当配置Java客户端生成器的时候会被调用。
+</p>
+
+<h2>编写插件</h2>
+<p>实现一个插件，最好的办法是扩展<code>org.mybatis.generator.api.PluginAdapter</code>类并只需要覆盖您需要的插件方法。</p>
+<p>插件接口方法可用于修改默认生成的代码，或添加其他生成的代码。Examples of things 可以通过插件实现的是：</p>
+<ul>
+  <li>给生成的方法添加自定义注解</li>
+  <li>给生成的类添加其他方法</li>
+  <li>给生成的XML文件添加其他元素</li>
+  <li>生成额外的Java文件</li>
+  <li>生成额外的XML文件</li>
+</ul>
+
+<p><code>contextXXX</code>方法总是会被调用。其他方法通过包代码生成器调用 - 且仅当表中的一个规则将会生成一个特定元素时。例如，如果该表没有主键， <code>modelPrimaryKeyClassGenerated(TopLevelClass, IntrospectedTable)</code>方法将不会被调用。</p>
+
+<p>方法返回一个<code>boolean</code>可用于绕过生成代码。如果任意这些方法返回<code>false</code> ，则相关的项目不会被添加到生成的代码中。如果配置了多个插件，那么第一个插件从方法返回false将导致MyBatis Generator停止调用所有其他插件的方法。</p>
+
+<p>如果您有一个关于插件的想法，可以自由的在用户列表问有关的问题。我们在这里提供帮助！</p>
+</body>
+</html>

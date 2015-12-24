@@ -1,0 +1,2 @@
+[DEBUG] 2015-12-17  10:03:21.500 [main] TestLogger - this logback testLogger debug message!
+[ERROR] 2015-12-17  10:03:21.500 [main] TestLogger - this logback testLogger error message!

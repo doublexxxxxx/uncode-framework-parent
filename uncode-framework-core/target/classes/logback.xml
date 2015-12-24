@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration info="true">
+	<!-- 应用名称 -->
+	<property name="APP_NAME" value="uncode-log" />
+	<!--日志文件的保存路径,首先查找系统属性-Dlog.dir,如果存在就使用其；否则，在当前目录下创建名为logs目录做日志存放的目录 -->
+	<property name="LOG_HOME" value="${log.dir:-logs}/${APP_NAME}" />
+	<!-- 日志输出格式 -->
+	<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+	<property name="ENCODER_PATTERN" value="[%-5level] %d{yyyy-MM-dd  HH:mm:ss.SSS} [%thread] %logger{80} - %msg%n" />
+	<contextName>${APP_NAME}</contextName>
+
+	<!-- 控制台日志：输出全部日志到控制台 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- 日志输出编码 -->
+		<Encoding>UTF-8</Encoding>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>${ENCODER_PATTERN}</Pattern>
+		</encoder>
+	</appender>
+
+	<!-- 文件日志：输出全部日志到文件 -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<fileNamePattern>${LOG_HOME}/output.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${ENCODER_PATTERN}</pattern>
+		</encoder>
+		<!--日志文件最大的大小 -->
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<!-- 错误日志：用于将错误日志输出到独立文件 -->
+	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/error.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${ENCODER_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
+		</filter>
+	</appender>
+
+	<!-- 独立输出的同步日志 -->
+	<appender name="SYNC_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/sync.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${ENCODER_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<!-- show parameters for hibernate sql 专为 Hibernate 定制 -->
+	<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />
+	<logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG" />
+	<logger name="org.hibernate.SQL" level="DEBUG" />
+	<logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />
+	<logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />
+
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="ERROR_FILE" />
+	</root>
+	
+	<!-- <logger name="logback" />将控制logback包下的所有类的日志的打印，如果没用设置打印级别，就继承他的上级<root>的日志级别“DEBUG” -->
+	<!-- 没有设置addtivity，默认为true，将此loger的打印信息向上级传递；  -->
+	<!-- 没有设置appender，此loger本身不打印任何信息 -->
+	<!-- <logger name="logback" />将控制logback包下的所有类的日志的打印，但是并没用设置打印级别，所以继承他的上级<root>的日志级别“DEBUG”；  -->
+	<!-- 没有设置addtivity，默认为true，将此loger的打印信息向上级传递；  -->
+	<!-- 没有设置appender，此loger本身不打印任何信息。 -->
+	<!-- <logger name="logback.LogbackDemo" level="INFO" additivity="false">控制logback.LogbackDemo类的日志打印，打印级别为“INFO”； --> 
+	<!-- additivity属性为false，表示此loger的打印信息不再向上级传递， --> 
+	<!-- 指定了名字为“STDOUT”的appender。 -->
+	<!-- <root level="DEBUG">将root的打印级别设置为“ERROR”，指定了名字为“STDOUT”的appender。 -->
+	<!-- 当执行logback.LogbackDemo类的main方法时，先执行<logger name="logback.LogbackDemo" level="INFO" additivity="false">， -->
+	<!-- 将级别为“INFO”及大于“INFO”的日志信息交给此loger指定的名为“STDOUT”的appender处理，在控制台中打出日志，不再向次loger的上级 --> 
+	<!-- <logger name="logback"/> 传递打印信息；  -->
+	<!-- <logger name="logback"/>未接到任何打印信息，当然也不会给它的上级root传递任何打印信息； -->
+	<logger name="org.uncodeframework.core.common.mail.simple" level="DEBUG" addtivity="true">
+		<appender-ref ref="SYNC_FILE" />
+	</logger>
+
+	<logger name="test" level="DEBUG" addtivity="true">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="ERROR_FILE" />
+	</logger>
+
+	<!--日志异步到数据库 
+	<appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+		日志异步到数据库 
+		<connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+			连接池
+			<dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">
+				<driverClass>com.mysql.jdbc.Driver</driverClass>
+				<url>jdbc:mysql://127.0.0.1:3306/uncodeframework</url>
+				<user>root</user>
+				<password>root</password>
+			</dataSource>
+		</connectionSource>
+	</appender>-->
+</configuration>
