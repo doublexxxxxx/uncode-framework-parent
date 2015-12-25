@@ -1,0 +1,54 @@
+commit 18f81a89492adba2f5ca91cb91338cdbd7077dc7
+Author: v5uncode <v5uncode@hotmail.com>
+Date:   Fri Dec 25 08:16:08 2015 +0800
+
+    test
+
+diff --git a/README.MD b/README.MD
+index d04247f..0ee6512 100644
+--- a/README.MD
++++ b/README.MD
+@@ -1,5 +1,6 @@
+-**uncode-framework**
++﻿**uncode-framework**
+ 
+ 平时学习工作中一些有用的编码
+ 
+ ----------
++test
+commit 18f81a89492adba2f5ca91cb91338cdbd7077dc7
+Author: v5uncode <v5uncode@hotmail.com>
+Date:   Fri Dec 25 08:16:08 2015 +0800
+
+    test
+
+diff --git a/README.MD b/README.MD
+index d04247f..0ee6512 100644
+--- a/README.MD
++++ b/README.MD
+@@ -1,5 +1,6 @@
+-**uncode-framework**
++﻿**uncode-framework**
+ 
+ 平时学习工作中一些有用的编码
+ 
+ ----------
++test
+commit 18f81a89492adba2f5ca91cb91338cdbd7077dc7
+Author: v5uncode <v5uncode@hotmail.com>
+Date:   Fri Dec 25 08:16:08 2015 +0800
+
+    test
+
+diff --git a/README.MD b/README.MD
+index d04247f..0ee6512 100644
+--- a/README.MD
++++ b/README.MD
+@@ -1,5 +1,6 @@
+-**uncode-framework**
++﻿**uncode-framework**
+ 
+ 平时学习工作中一些有用的编码
+ 
+ ----------
++test
